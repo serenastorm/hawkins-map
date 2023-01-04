@@ -1,11 +1,138 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from '@next/font/google'
-import styles from '../styles/Home.module.css'
+import { useEffect, useState, useRef, Fragment } from "react";
+import Image from "next/image";
+import Head from "next/head";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
+import styles from "../styles/Home.module.scss";
+import { locations, LOCATION_TYPES } from "@/constants/locations";
+import { Filters, MapPin, MapTooltip, ZoomControls } from "@/components";
+import type { LocationType } from "@/constants/locations";
+import type { CSSProperties, KeyboardEvent } from "react";
 
-const inter = Inter({ subsets: ['latin'] })
+// import { Inter } from "@next/font/google";
 
 export default function Home() {
+  const [scale, setScale] = useState<number>(1);
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const [visibleMapPin, setVisibleMapPin] = useState<string | null>(null);
+  const [showConfirmedLocationsOnly, setShowConfirmedLocationsOnly] =
+    useState<boolean>(false);
+  const [visibleLocationTypes, setVisibleLocationTypes] = useState<
+    LocationType[]
+  >(LOCATION_TYPES.map((locationType) => locationType.label));
+  const [windowSize, setWindowSize] = useState<{
+    width?: number;
+    height?: number;
+  }>({
+    width: undefined,
+    height: undefined,
+  });
+  const [isPanning, setIsPanning] = useState<boolean>(false);
+  const tabsRefs = useRef<Array<HTMLButtonElement | null>>([]);
+
+  const visibleCategories = LOCATION_TYPES.filter((locationType) =>
+    visibleLocationTypes.includes(locationType.label)
+  )
+    .map((locationType) => locationType.categories)
+    .flat();
+
+  const VISIBLE_LOCATIONS = locations.filter(
+    (location) =>
+      visibleCategories.includes(location.category) &&
+      (!showConfirmedLocationsOnly || location.status !== "maybe")
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const IS_MOBILE = windowSize.width && windowSize.width < 600;
+  const MIN_SCALE = 1;
+  const MAX_SCALE = 3;
+  const WHEEL_STEP = 0.2;
+
+  const PIN_SCALE = 100 / (100 * scale);
+
+  const roundNumber = (number: number) => {
+    return parseFloat(number.toFixed(1));
+  };
+
+  const totalTabs = VISIBLE_LOCATIONS.length;
+
+  const activateTab = (newTabIndex: number | null) => {
+    const newTabId =
+      newTabIndex || newTabIndex === 0
+        ? VISIBLE_LOCATIONS[newTabIndex].id
+        : null;
+
+    /* Set new tab as active */
+    setVisibleMapPin(newTabId);
+
+    if (newTabIndex || newTabIndex === 0) {
+      /* Focus new tab button */
+      tabsRefs?.current[newTabIndex]?.focus();
+    }
+  };
+
+  const onKeyPressed = (
+    event: KeyboardEvent<HTMLButtonElement>,
+    tabIndex: number
+  ) => {
+    const shouldGoToNextTab = event.key === "ArrowRight";
+    const shouldGoToPreviousTab = event.key === "ArrowLeft";
+    const shouldGoToFirstTab = event.key === "Home";
+    const shouldGoToLastTab = event.key === "End";
+
+    const prevTab = tabIndex - 1;
+    const nextTab = tabIndex + 1;
+    const lastTab = totalTabs - 1;
+
+    if (shouldGoToNextTab) {
+      if (tabIndex >= totalTabs - 1) {
+        activateTab(0);
+      } else {
+        activateTab(nextTab);
+      }
+    } else if (shouldGoToPreviousTab) {
+      if (tabIndex <= 0) {
+        activateTab(lastTab);
+      } else {
+        activateTab(prevTab);
+      }
+    } else if (shouldGoToFirstTab) {
+      activateTab(0);
+    } else if (shouldGoToLastTab) {
+      activateTab(lastTab);
+    } else {
+      return null;
+    }
+  };
+
+  const getButtonProps = (id: string) => {
+    const tabIndex = VISIBLE_LOCATIONS.findIndex(
+      (location) => location.id === id
+    );
+
+    return {
+      type: "button",
+      role: "tab",
+      ariaSelected: id === visibleMapPin ? "true" : "false",
+      ariaControls: `${id}-tab`,
+      id: `${id}-tab-control`,
+      tabIndex: id === visibleMapPin ? 0 : -1,
+      ref: (el: HTMLButtonElement) => (tabsRefs.current[tabIndex] = el),
+      onKeyDown: (event: KeyboardEvent<HTMLButtonElement>) =>
+        onKeyPressed(event, tabIndex),
+    };
+  };
+
   return (
     <>
       <Head>
@@ -14,110 +141,128 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.tsx</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
+      <main>
+        <div className={styles.mapWrapper}>
+          <TransformWrapper
+            initialScale={scale}
+            maxScale={MAX_SCALE}
+            // centerOnInit
+            onPanningStart={() => {
+              activateTab(null);
+              setIsPanning(true);
 
-        <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
-          <div className={styles.thirteen}>
-            <Image
-              src="/thirteen.svg"
-              alt="13"
-              width={40}
-              height={31}
-              priority
-            />
-          </div>
-        </div>
-
-        <div className={styles.grid}>
-          <a
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
+              if (IS_MOBILE) {
+                setShowFilters(false);
+              }
+            }}
+            onPanningStop={() => setIsPanning(false)}
+            // onPinchingStop={(event) => setScale(event.state.scale)}
+            onZoomStop={(event) => setScale(event.state.scale)}
+            // onWheelStop={(event) => setScale(event.state.scale)}
+            wheel={{ step: WHEEL_STEP }}
+            pinch={{ step: WHEEL_STEP }}
+            doubleClick={{ step: WHEEL_STEP }}
           >
-            <h2 className={inter.className}>
-              Docs <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Find in-depth information about Next.js features and&nbsp;API.
-            </p>
-          </a>
+            {({ zoomIn, zoomOut, zoomToElement }) => (
+              <Fragment>
+                <Filters
+                  visibleLocationTypes={visibleLocationTypes}
+                  setVisibleLocationTypes={setVisibleLocationTypes}
+                  showConfirmedLocationsOnly={showConfirmedLocationsOnly}
+                  setShowConfirmedLocationsOnly={setShowConfirmedLocationsOnly}
+                  showFilters={showFilters}
+                  setShowFilters={setShowFilters}
+                />
 
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
-            </p>
-          </a>
+                <ZoomControls
+                  zoomIn={() => {
+                    setScale(
+                      scale > MAX_SCALE - WHEEL_STEP
+                        ? MAX_SCALE
+                        : roundNumber(scale + WHEEL_STEP)
+                    );
+                    zoomIn(WHEEL_STEP);
+                  }}
+                  zoomOut={() => {
+                    setScale(
+                      scale < MIN_SCALE + WHEEL_STEP
+                        ? MIN_SCALE
+                        : roundNumber(scale - WHEEL_STEP)
+                    );
+                    zoomOut(WHEEL_STEP);
+                  }}
+                />
+                {/* {shouldInstructionsBeShown && (
+                  <p>
+                    Use your keyboard arrows{" "}
+                    <span aria-hidden="true">or click</span> to navigate
+                  </p>
+                )} */}
+                {VISIBLE_LOCATIONS.map((location, locationIndex) => (
+                  <MapTooltip
+                    key={`tooltip-${location.id}`}
+                    controlledVisible={visibleMapPin === location.id}
+                    {...location}
+                  />
+                ))}
+                <TransformComponent
+                  wrapperStyle={{
+                    width: "100%",
+                    height: "100vh",
+                    position: "relative",
+                  }}
+                >
+                  <div
+                    className={styles.map}
+                    style={
+                      {
+                        "--pin-scale": PIN_SCALE < 0.5 ? 0.5 : PIN_SCALE,
+                        cursor: isPanning ? "grabbing" : "grab",
+                      } as CSSProperties
+                    }
+                  >
+                    <Image
+                      src="/assets/map.jpg"
+                      alt="Map of Hawkins"
+                      width="1512"
+                      height="1700"
+                      // onClick={() => setVisibleMapPin(null)}
+                    />
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
+                    {VISIBLE_LOCATIONS.map((location, locationIndex) => (
+                      <MapPin
+                        key={location.id}
+                        controlledVisible={visibleMapPin === location.id}
+                        setControlledVisible={(isVisible: boolean) => {
+                          activateTab(isVisible ? locationIndex : null);
 
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
+                          if (isVisible) {
+                            setShowFilters(false);
+                          }
+                        }}
+                        zoomIn={() => {
+                          const NEW_SCALE =
+                            scale > 1 ? scale : IS_MOBILE ? 1.5 : 1.2;
+                          zoomToElement(
+                            `${location.id}-tab-control`,
+                            NEW_SCALE
+                          );
+                          setScale(NEW_SCALE);
+                        }}
+                        isSecondary={
+                          visibleMapPin ? visibleMapPin !== location.id : false
+                        }
+                        buttonProps={getButtonProps(location.id)}
+                        {...location}
+                      />
+                    ))}
+                  </div>
+                </TransformComponent>
+              </Fragment>
+            )}
+          </TransformWrapper>
         </div>
       </main>
     </>
-  )
+  );
 }

@@ -1,0 +1,141 @@
+$checkmark-size: 1.2em;
+$field-padding: 4px;
+
+.toggleBtn,
+.closeBtn {
+  cursor: pointer;
+  border-radius: 1.5em;
+  color: var(--text-color);
+  font-family: var(--mono-type);
+  font-weight: 700;
+  font-size: 1.4rem;
+  border: 1px solid var(--secondary-text-color);
+
+  &:hover {
+    background-color: var(--text-color);
+    border-color: var(--text-color);
+    color: var(--bg-color);
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  background-color: transparent;
+  padding: 6px 12px;
+  top: var(--page-padding);
+  right: var(--page-padding);
+}
+
+.toggleBtn {
+  position: fixed;
+  top: var(--page-padding);
+  z-index: 140;
+  background-color: rgba(var(--bg-color-rgba), 0.7);
+  padding: 8px 12px;
+  
+
+  @media (max-width: 991.99px) {
+    left: var(--page-padding);
+  }
+
+  @media (min-width: 992px) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.filters {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  overflow-y: scroll;
+  z-index: 150;
+  background-color: var(--bg-color);
+  padding: var(--page-padding);
+  // min-width: 35vw;
+  width: var(--filters-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0px 0px 96px 40px rgba(6, 9, 10, 0.5);
+
+  legend {
+    font-family: var(--sans-type);
+    padding: 8px 0 4px;
+    font-weight: 600;
+  }
+
+  label {
+    cursor: pointer;
+    font-family: var(--sans-type);
+    padding: $field-padding;
+    border-radius: 4px;
+    position: relative;
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+
+      .checkmark::after {
+        opacity: 0.5;
+      }
+    }
+  }
+
+  hr {
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  input {
+    width: $checkmark-size;
+    height: $checkmark-size;
+    opacity: 0;
+    margin-right: 12px;
+
+    /* When the checkbox is checked, add a blue background */
+    &:checked ~ .checkmark {
+      // background-color: #2196f3;
+
+      /* Show the checkmark when checked */
+      &:after {
+        opacity: 1;
+      }
+    }
+  }
+
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+    border-width: 0;
+  }
+}
+
+.checkmark {
+  position: absolute;
+  top: $field-padding;
+  left: $field-padding;
+  width: $checkmark-size;
+  height: $checkmark-size;
+  border-radius: 4px;
+  border: 2px solid var(--secondary-text-color);
+  /* Style the checkmark/indicator */
+
+  &:after {
+    content: "";
+    opacity: 0;
+    position: absolute;
+    display: block;
+    left: calc($checkmark-size * 0.3);
+    top: calc($checkmark-size * 0.1);
+    width: calc($checkmark-size * 0.2);
+    height: calc($checkmark-size * 0.45);
+    border: solid var(--red);
+    border-width: 0 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}

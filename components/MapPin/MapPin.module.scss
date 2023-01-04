@@ -1,0 +1,121 @@
+.mapCoordinates {
+}
+
+.mapCoordinates,
+.mapPin {
+  position: absolute;
+  left: calc((var(--coordinates-x) / var(--base-map-width)) * 100%);
+  top: calc((var(--coordinates-y) / var(--base-map-height)) * 100%);
+  z-index: var(--priority);
+}
+
+.mapPin {
+  background-color: transparent;
+  margin: 0;
+  padding: 0;
+  border-width: 0;
+  color: var(--text-color);
+  width: var(--pin-size);
+  height: var(--pin-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(-120%) translateX(-50%) scale(var(--pin-scale));
+  transform-origin: bottom center;
+  transition: all 0.25s ease-in-out;
+  cursor: pointer;
+
+  &:hover,
+  &.selectedPin,
+  &[tabindex="0"]:focus-visible {
+    z-index: 100;
+    color: var(--red);
+
+    &:before {
+      background: linear-gradient(
+          180deg,
+          rgba(255, 23, 43, 0) 28.13%,
+          rgba(255, 23, 43, 0.2) 100%
+        ),
+        rgba(var(--bg-color-rgba), 0.9);
+      box-shadow: inset 0 0 12px rgba(255, 23, 43, 0.2);
+      border-color: var(--red);
+    }
+
+    & > svg {
+      transform: scale(1.1);
+      filter: drop-shadow(0px 0px 4px rgba(255, 23, 43, 0.5));
+      opacity: 1;
+    }
+  }
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+  }
+
+  // &[tabindex="0"]:focus-visible {
+  //   &:before {
+  //     background-color: var(--text-color);
+  //     border-color: var(--text-color);
+  //   }
+
+  //   & > svg {
+  //     path[fill] {
+  //       fill: var(--bg-color);
+  //     }
+  //   }
+  // }
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset: 0;
+    background: rgba(var(--bg-color-rgba), 0.7);
+    backdrop-filter: blur(4px);
+    border-radius: 50% 50% 50% 0;
+    border: calc(var(--pin-size) * 0.05) solid var(--text-color);
+    transform: rotate(-45deg);
+    transition: inherit;
+  }
+
+  & > svg {
+    position: relative;
+    z-index: 2;
+    width: calc(var(--pin-size) / 1.5);
+    height: calc(var(--pin-size) / 1.5);
+    margin-top: calc(var(--pin-size) * 0.05);
+    opacity: 0.8;
+
+    path {
+      fill: currentColor;
+    }
+  }
+}
+
+.secondaryPin {
+  & > svg {
+    opacity: 0.5;
+  }
+
+  &::before {
+    border-color: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--secondary-text-color);
+  border-radius: 50%;
+  width: calc(var(--pin-size) * 0.3);
+  height: calc(var(--pin-size) * 0.3);
+  z-index: 5;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}

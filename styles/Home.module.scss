@@ -1,0 +1,23 @@
+.mapWrapper {
+  --base-map-width: 1512;
+  --base-map-height: 1700;
+
+  // width: 100vw;
+  // height: 100vh;
+  // overflow: scroll;
+}
+
+.map {
+  position: relative;
+  width: var(--map-width);
+  height: calc(
+    var(--map-width) * (var(--base-map-height) / var(--base-map-width))
+  );
+
+  img {
+    width: var(--map-width);
+    height: auto;
+    position: relative;
+    z-index: 0;
+  }
+}

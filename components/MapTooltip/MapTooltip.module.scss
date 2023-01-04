@@ -1,0 +1,48 @@
+.tooltip {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  img {
+    width: 100%;
+    height: auto;
+    margin-bottom: 4px;
+    border-radius: 4px;
+  }
+
+  & > p {
+    margin: 0;
+  }
+
+  address {
+    font-family: var(--sans-type);
+    font-size: 1.4rem;
+
+    & + p {
+      margin-top: 4px;
+    }
+  }
+}
+
+.title {
+  h2 {
+    display: inline;
+    font-family: var(--sans-type);
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--text-color);
+  }
+}
+
+.tooltipContainer {
+  background-color: var(--bg-color);
+  border-color: var(--blue);
+  color: var(--text-color);
+  border-radius: 8px;
+  padding: 16px;
+  width: min(calc(100vw - (var(--page-padding) * 2)), 40rem);
+  position: fixed;
+  bottom: var(--page-padding);
+  left: var(--page-padding);
+  z-index: 100;
+}

@@ -1,0 +1,9 @@
+$content-width: clamp(
+  calc(320px - (16px * 2)),
+  calc(100vw - (16px * 2)),
+  80rem
+);
+
+.notes {
+  padding: 15vh calc((100% - #{$content-width}) / 2);
+}
