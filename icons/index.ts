@@ -11,6 +11,7 @@ import { SchoolIcon } from "./SchoolIcon";
 
 import type { LocationCategory } from "@/constants/locations";
 
+export { StarcourtLogomark } from "./StarcourtLogomark";
 export { CheckmarkIcon } from "./CheckmarkIcon";
 export { QuestionIcon } from "./QuestionIcon";
 

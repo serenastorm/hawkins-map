@@ -1,27 +1,8 @@
 $checkmark-size: 1.2em;
 $field-padding: 4px;
 
-.toggleBtn,
-.closeBtn {
-  cursor: pointer;
-  border-radius: 1.5em;
-  color: var(--text-color);
-  font-family: var(--mono-type);
-  font-weight: 700;
-  font-size: 1.4rem;
-  border: 1px solid var(--secondary-text-color);
-
-  &:hover {
-    background-color: var(--text-color);
-    border-color: var(--text-color);
-    color: var(--bg-color);
-  }
-}
-
 .closeBtn {
   position: absolute;
-  background-color: transparent;
-  padding: 6px 12px;
   top: var(--page-padding);
   right: var(--page-padding);
 }
@@ -30,9 +11,6 @@ $field-padding: 4px;
   position: fixed;
   top: var(--page-padding);
   z-index: 140;
-  background-color: rgba(var(--bg-color-rgba), 0.7);
-  padding: 8px 12px;
-  
 
   @media (max-width: 991.99px) {
     left: var(--page-padding);
@@ -137,5 +115,19 @@ $field-padding: 4px;
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+  }
+}
+
+.notesLink {
+  display: block;
+  font-size: 1.4rem;
+  line-height: 160%;
+  font-family: var(--sans-type);
+  color: var(--secondary-text-color);
+  margin-top: 3.2rem;
+  max-width: max-content;
+
+  &:hover {
+    color: var(--text-color);
   }
 }

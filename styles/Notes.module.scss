@@ -5,5 +5,66 @@ $content-width: clamp(
 );
 
 .notes {
-  padding: 15vh calc((100% - #{$content-width}) / 2);
+  padding: 7.5vh calc((100% - #{$content-width}) / 2) 15vh
+    calc((100% - #{$content-width}) / 2);
+
+  & > a {
+    display: block;
+    cursor: pointer;
+    background-color: transparent;
+    border: 1px solid var(--secondary-text-color);
+    border-radius: 1.5em;
+    color: var(--text-color);
+    font-family: var(--mono-type);
+    font-weight: 700;
+    font-size: 1.4rem;
+    padding: 6px 12px;
+    text-decoration: none;
+    margin-bottom: 7.5vh;
+    max-width: max-content;
+
+    &:hover {
+      background-color: var(--text-color);
+      border-color: var(--text-color);
+      color: var(--bg-color);
+    }
+  }
+
+  & > p,
+  blockquote p,
+  li {
+    font-size: 1.6rem;
+    line-height: 160%;
+    font-family: var(--sans-type);
+    color: var(--secondary-text-color);
+
+    a {
+      color: currentColor;
+
+      &:hover {
+        color: var(--text-color);
+      }
+    }
+  }
+
+  em {
+    color: var(--text-color);
+  }
+
+  blockquote {
+    margin: 1.6rem 0;
+    padding: 0.4rem 1.6rem;
+    border-left: 2px solid var(--text-color);
+    font-style: italic;
+  }
+
+  h2 {
+    text-transform: uppercase;
+    font-weight: 700;
+    font-size: 1.6rem;
+
+    &:not(:first-of-type) {
+      margin-top: 4rem;
+    }
+  }
 }

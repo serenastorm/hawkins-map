@@ -13,6 +13,10 @@
   --red: #ff172b;
   --bg-color: #06090a;
   --bg-color-rgba: 6, 9, 10;
+  --starcourt-bg-color: #3057e1;
+  --starcourt-bg-color-rgba: 48, 87, 225;
+  --starcourt-blue: #6AEEDB;
+  --starcourt-pink: #FE82FF;
   --map-width: 100vmax;
   --mono-type: "Overpass Mono", monospace;
   --sans-type: "Be Vietnam Pro", sans-serif;
@@ -48,6 +52,10 @@ p {
   font-weight: 300;
 }
 
+a {
+  text-underline-offset: 0.2em;
+}
+
 .tooltip-container {
   --tooltipBackground: var(--bg-color);
   --tooltipBorder: var(--blue);
@@ -74,4 +82,18 @@ canvas {
   -webkit-transform3d: translate(0, 0, 0);
   -moz-transform3d: translate(0, 0, 0);
   transform3d: translate(0, 0, 0);
+}
+
+/* Text meant only for screen readers */
+.screenReaderText {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
 }

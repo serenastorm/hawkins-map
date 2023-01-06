@@ -1,6 +1,7 @@
-import Image from "next/image";
+import { createElement } from "react";
+import Link from "next/link";
 import { usePopperTooltip } from "react-popper-tooltip";
-import { icons, QuestionIcon } from "@/icons";
+import { icons, QuestionIcon, StarcourtLogomark } from "@/icons";
 import { LocationStatusChip } from "@/components";
 
 import type { Location } from "@/constants/locations";
@@ -9,7 +10,7 @@ import type { HTMLProps, CSSProperties } from "react";
 import styles from "./MapPin.module.scss";
 
 type MapPinType = {
-  buttonProps: HTMLProps<HTMLButtonElement>;
+  buttonProps: HTMLProps<HTMLButtonElement | HTMLAnchorElement>;
   controlledVisible: boolean;
   setControlledVisible: (isVisible: boolean) => void;
   zoomIn: () => void;
@@ -17,19 +18,15 @@ type MapPinType = {
 } & Location;
 
 export const MapPin = ({
-  address,
   buttonProps,
   category,
   coordinates,
   controlledVisible,
-  description,
   id,
-  img,
   isSecondary,
   priority,
   setControlledVisible,
   status,
-  title,
   zoomIn,
 }: MapPinType) => {
   const {
@@ -46,6 +43,40 @@ export const MapPin = ({
     onVisibleChange: setControlledVisible,
   });
 
+  const IS_STARCOURT_PIN = id === "starcourt-mall";
+
+  const pinProps = {
+    ...buttonProps,
+    className: `${styles.mapPin} ${isSecondary ? styles.secondaryPin : ""} ${
+      controlledVisible ? styles.selectedPin : ""
+    } ${IS_STARCOURT_PIN ? styles.starcourtPin : ""}`,
+    style: {
+      "--coordinates-x": coordinates.x,
+      "--coordinates-y": coordinates.y,
+      "--priority": priority,
+    } as CSSProperties,
+    onFocus: () => {
+      zoomIn();
+      setControlledVisible(true);
+    },
+    onBlur: () => setControlledVisible(false),
+  };
+
+  const starcourtPinProps = {
+    ...pinProps,
+    href: "/starcourt",
+  } as HTMLProps<HTMLAnchorElement>;
+
+  const regularPinProps = {
+    ...pinProps,
+    onClick: () => {
+      zoomIn();
+      setControlledVisible(true);
+    },
+    // onMouseEnter: () => setControlledVisible(true),
+    // onMouseLeave: () => setControlledVisible(false),
+  } as HTMLProps<HTMLButtonElement>;
+
   return (
     <>
       <div
@@ -59,37 +90,20 @@ export const MapPin = ({
           } as CSSProperties
         }
       ></div>
-      <button
-        className={`${styles.mapPin} ${
-          isSecondary ? styles.secondaryPin : ""
-        } ${controlledVisible ? styles.selectedPin : ""}`}
-        style={
-          {
-            "--coordinates-x": coordinates.x,
-            "--coordinates-y": coordinates.y,
-            "--priority": priority,
-          } as CSSProperties
-        }
-        onClick={() => {
-          zoomIn();
-          setControlledVisible(!controlledVisible);
-        }}
-        // onMouseEnter={() => setControlledVisible(true)}
-        // onMouseLeave={() => setControlledVisible(false)}
-        onFocus={() => {
-          zoomIn();
-          setControlledVisible(true);
-        }}
-        onBlur={() => setControlledVisible(false)}
-        {...buttonProps}
-      >
-        {icons[category]()}
-        {status !== "confirmed" && (
-          <div className={styles.badge}>
-            <QuestionIcon />
-          </div>
-        )}
-      </button>
+      {IS_STARCOURT_PIN ? (
+        <a {...starcourtPinProps}>
+          <StarcourtLogomark />
+        </a>
+      ) : (
+        <button {...regularPinProps} type="button">
+          {icons[category]()}
+          {status !== "confirmed" && (
+            <div className={styles.badge}>
+              <QuestionIcon />
+            </div>
+          )}
+        </button>
+      )}
     </>
   );
 };

@@ -1,0 +1,51 @@
+.button {
+  cursor: pointer;
+  border-radius: 1.5em;
+  color: var(--text-color);
+  font-family: var(--mono-type);
+  font-weight: 700;
+  font-size: 1.4rem;
+  line-height: 1.2;
+  border: 1px solid var(--secondary-text-color);
+  text-decoration: none;
+  margin: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.dark {
+    background-color: rgba(var(--bg-color-rgba), 0.7);
+  }
+
+  &.outline {
+    background-color: transparent;
+  }
+
+  &.light {
+    background-color: rgba(var(--starcourt-bg-color-rgba), 0.7);
+    border: 1px solid var(--starcourt-blue);
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--starcourt-blue);
+      border-color: var(--starcourt-blue);
+      color: var(--bg-color);
+    }
+  }
+
+  &:hover,
+  &:focus-visible {
+    background-color: var(--text-color);
+    border-color: var(--text-color);
+    color: var(--bg-color);
+  }
+
+  &.sm {
+    padding: 6px 12px;
+  }
+
+  &.lg {
+    padding: 8px 12px;
+  }
+}

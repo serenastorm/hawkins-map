@@ -1,1 +1,1 @@
-export { MapPin, MapTooltip } from "./MapPin";
+export { MapPin } from "./MapPin";

@@ -160,6 +160,7 @@ export const locations: Location[] = [
   },
   {
     id: "bennys-burgers",
+    address: "4819 Randolph Lane",
     category: "retail",
     coordinates: {
       x: 630,

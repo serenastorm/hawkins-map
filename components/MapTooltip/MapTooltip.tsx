@@ -25,8 +25,10 @@ export const MapTooltip = ({
   status,
   title,
 }: MapTooltipType) => {
+  const IS_STARCOURT_PIN = id === "starcourt-mall";
+
   return (
-    <AnimatePresence>
+    <>
       {controlledVisible && (
         <motion.article
           aria-labelledby={`${id}-tab-control`}
@@ -64,11 +66,8 @@ export const MapTooltip = ({
             }
           >
             {img && (
-              <motion.img
-                src={img}
-                alt="Map of Hawkins"
-                width="300"
-                height="168"
+              <motion.div
+                className={styles.image}
                 initial={{
                   opacity: 0,
                 }}
@@ -83,9 +82,20 @@ export const MapTooltip = ({
                 }}
                 exit={{
                   opacity: 0,
-                  transition: { duration: 0.25, type: "tween", ease: "easeIn" },
+                  transition: {
+                    duration: 0.25,
+                    type: "tween",
+                    ease: "easeIn",
+                  },
                 }}
-              />
+              >
+                <Image
+                  src={img}
+                  alt="Map of Hawkins"
+                  width="300"
+                  height="168"
+                />
+              </motion.div>
             )}
 
             <motion.div
@@ -131,6 +141,9 @@ export const MapTooltip = ({
                 {address}
               </motion.address>
             )}
+            {IS_STARCOURT_PIN && (
+              <motion.a href="/starcourt">Explore the mall</motion.a>
+            )}
             {description && (
               <motion.p
                 initial={{
@@ -156,6 +169,6 @@ export const MapTooltip = ({
           </div>
         </motion.article>
       )}
-    </AnimatePresence>
+    </>
   );
 };
