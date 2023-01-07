@@ -8,7 +8,7 @@ import { locations, LOCATION_TYPES } from "@/constants/locations";
 import { Filters, MapPin, MapTooltip, ZoomControls } from "@/components";
 import { roundNumber } from "@/infrastructure/utils/roundNumber";
 import type { LocationType } from "@/constants/locations";
-import type { CSSProperties, KeyboardEvent } from "react";
+import type { AriaAttributes, CSSProperties, KeyboardEvent } from "react";
 
 // import { Inter } from "@next/font/google";
 
@@ -124,7 +124,7 @@ export default function Home() {
 
     return {
       role: "tab",
-      "aria-selected": id === visibleMapPin ? "true" : "false",
+      "aria-selected": id === visibleMapPin ? "true" : "false" as AriaAttributes['aria-selected'],
       "aria-controls": `${id}-tab`,
       id: `${id}-tab-control`,
       tabIndex: id === visibleMapPin ? 0 : -1,
