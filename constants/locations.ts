@@ -56,7 +56,7 @@ export const LOCATION_TYPES: {
   },
   {
     label: "Public services",
-    categories: ["library", "hospital"],
+    categories: ["library", "hospital", "public services"],
   },
   {
     label: "School",
@@ -85,7 +85,7 @@ export const LOCATION_TYPES: {
 ];
 
 const MAPLE_NOTES =
-  'This is labelled Maple Avenue, not Maple Street, but Nancy tells Steve to meet her "at the corner of Maple and Dearborn" (S1E1) and Dearborn crosses Maple Avenue, so it could be a labelling.';
+  'This is labelled Maple Avenue, not Maple Street, but Nancy tells Steve to meet her "at the corner of Maple and Dearborn" (S1E1) and Dearborn crosses Maple Avenue, so it could be a labelling error.';
 const MURRAYS_MAP_NOTES = "Location estimated using Murray Bauman's map (S1E5)";
 
 export const locations: Location[] = [
@@ -306,8 +306,8 @@ export const locations: Location[] = [
     id: "roane-county-coroner",
     category: "public services",
     coordinates: {
-      x: 1244,
-      y: 863,
+      x: 1243,
+      y: 864,
     },
     img: "/assets/roane-county-coroner.jpg",
     title: "Roane County Coroner",
@@ -396,6 +396,18 @@ export const locations: Location[] = [
     priority: 1,
   },
   {
+    id: "hawkins-national-laboratory",
+    category: "place of interest",
+    coordinates: {
+      x: 524,
+      y: 1322,
+    },
+    img: "/assets/hawkins-national-laboratory.jpg",
+    title: "Hawkins National Laboratory",
+    status: "confirmed",
+    priority: 2,
+  },
+  {
     id: "mothergate",
     category: "gate",
     coordinates: {
@@ -429,6 +441,32 @@ export const locations: Location[] = [
     },
     description: MURRAYS_MAP_NOTES,
     title: "Will's bike",
+    status: "approx",
+    priority: 1,
+  },
+  {
+    id: "harrington-house",
+    category: "residence",
+    coordinates: {
+      x: 789,
+      y: 1109,
+    },
+    description: MURRAYS_MAP_NOTES,
+    img: "/assets/harrington-house.jpg",
+    title: "Harrington House",
+    status: "approx",
+    priority: 2,
+  },
+  {
+    id: "barbs-car",
+    category: "place of interest",
+    coordinates: {
+      x: 809,
+      y: 1076,
+    },
+    description: MURRAYS_MAP_NOTES,
+    img: "/assets/barbs-car.jpg",
+    title: "Barb's car",
     status: "approx",
     priority: 1,
   },

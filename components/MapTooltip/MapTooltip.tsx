@@ -1,8 +1,8 @@
 import Image from "next/image";
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 // import { usePopperTooltip } from "react-popper-tooltip";
-import { icons, QuestionIcon } from "@/icons";
-import { Button, LocationStatusChip } from "@/components";
+import { LocationStatusChip } from "@/components";
 
 import type { Location } from "@/constants/locations";
 import type { CSSProperties } from "react";
@@ -27,6 +27,7 @@ export const MapTooltip = ({
   source,
   title,
 }: MapTooltipType) => {
+  const [imageLoaded, setImageLoaded] = useState<boolean>(false);
   // const IS_STARCOURT_TOOLTIP = id === "starcourt-mall";
 
   return (
@@ -74,7 +75,7 @@ export const MapTooltip = ({
                   opacity: 0,
                 }}
                 animate={{
-                  opacity: 1,
+                  opacity: imageLoaded ? 1 : 0,
                   transition: {
                     duration: 0.5,
                     type: "tween",
@@ -96,6 +97,7 @@ export const MapTooltip = ({
                   alt="Map of Hawkins"
                   width="300"
                   height="168"
+                  onLoad={() => setImageLoaded(true)}
                 />
               </motion.div>
             )}
