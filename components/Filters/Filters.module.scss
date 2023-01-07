@@ -1,5 +1,5 @@
 $checkmark-size: 1.2em;
-$field-padding: 4px;
+$field-padding: 6px;
 
 .closeBtn {
   position: absolute;
@@ -52,11 +52,13 @@ $field-padding: 4px;
     border-radius: 4px;
     position: relative;
 
-    &:hover {
-      background-color: rgba(255, 255, 255, 0.05);
+    @media (hover: hover) {
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
 
-      .checkmark::after {
-        opacity: 0.5;
+        .checkmark::after {
+          opacity: 0.5;
+        }
       }
     }
   }
@@ -106,8 +108,8 @@ $field-padding: 4px;
     opacity: 0;
     position: absolute;
     display: block;
-    left: calc($checkmark-size * 0.3);
-    top: calc($checkmark-size * 0.1);
+    left: calc($checkmark-size * 0.25);
+    top: calc($checkmark-size * 0.075);
     width: calc($checkmark-size * 0.2);
     height: calc($checkmark-size * 0.45);
     border: solid var(--red);

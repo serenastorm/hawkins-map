@@ -1,8 +1,8 @@
-import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
-import { usePopperTooltip } from "react-popper-tooltip";
+import { AnimatePresence, motion } from "framer-motion";
+// import { usePopperTooltip } from "react-popper-tooltip";
 import { icons, QuestionIcon } from "@/icons";
-import { LocationStatusChip } from "@/components";
+import { Button, LocationStatusChip } from "@/components";
 
 import type { Location } from "@/constants/locations";
 import type { CSSProperties } from "react";
@@ -20,15 +20,17 @@ export const MapTooltip = ({
   coordinates,
   controlledVisible,
   description,
+
   img,
   priority,
   status,
+  source,
   title,
 }: MapTooltipType) => {
-  const IS_STARCOURT_PIN = id === "starcourt-mall";
+  // const IS_STARCOURT_TOOLTIP = id === "starcourt-mall";
 
   return (
-    <>
+    <AnimatePresence>
       {controlledVisible && (
         <motion.article
           aria-labelledby={`${id}-tab-control`}
@@ -141,8 +143,29 @@ export const MapTooltip = ({
                 {address}
               </motion.address>
             )}
-            {IS_STARCOURT_PIN && (
-              <motion.a href="/starcourt">Explore the mall</motion.a>
+
+            {source && (
+              <motion.blockquote
+                initial={{
+                  opacity: 0,
+                }}
+                animate={{
+                  opacity: 1,
+                  transition: {
+                    duration: 0.5,
+                    type: "tween",
+                    ease: "easeOut",
+                    delay: (address ? 0.7 : 0.5) + (img ? 0.2 : 0),
+                  },
+                }}
+                exit={{
+                  opacity: 0,
+                  transition: { duration: 0.25, type: "tween", ease: "easeIn" },
+                }}
+              >
+                <p>{source.quote}</p>
+                <cite>{source.author}</cite>
+              </motion.blockquote>
             )}
             {description && (
               <motion.p
@@ -169,6 +192,6 @@ export const MapTooltip = ({
           </div>
         </motion.article>
       )}
-    </>
+    </AnimatePresence>
   );
 };

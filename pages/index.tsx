@@ -16,6 +16,7 @@ export default function Home() {
   const [scale, setScale] = useState<number>(1);
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [visibleMapPin, setVisibleMapPin] = useState<string | null>(null);
+  const [isImageReady, setIsImageReady] = useState<boolean>(false);
   const [showConfirmedLocationsOnly, setShowConfirmedLocationsOnly] =
     useState<boolean>(false);
   const [visibleLocationTypes, setVisibleLocationTypes] = useState<
@@ -122,8 +123,8 @@ export default function Home() {
 
     return {
       role: "tab",
-      ariaSelected: id === visibleMapPin ? "true" : "false",
-      ariaControls: `${id}-tab`,
+      "aria-selected": id === visibleMapPin ? "true" : "false",
+      "aria-controls": `${id}-tab`,
       id: `${id}-tab-control`,
       tabIndex: id === visibleMapPin ? 0 : -1,
       ref: (el: HTMLButtonElement | HTMLAnchorElement) =>
@@ -142,146 +143,157 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
-        <div className={styles.mapWrapper}>
-          <TransformWrapper
-            key="hawkins-map"
-            initialScale={scale}
-            maxScale={MAX_SCALE}
-            // centerOnInit
-            onPanningStart={() => {
-              // activateTab(null);
-              setIsPanning(true);
+      <AnimatePresence>
+        <main>
+          <div className={styles.mapWrapper}>
+            <TransformWrapper
+              key="hawkins-map"
+              initialScale={scale}
+              maxScale={MAX_SCALE}
+              // centerOnInit
+              onPanningStart={() => {
+                // activateTab(null);
+                setIsPanning(true);
 
-              if (IS_MOBILE) {
-                setShowFilters(false);
-              }
-            }}
-            onPanningStop={() => setIsPanning(false)}
-            // onPinchingStop={(event) => setScale(event.state.scale)}
-            onZoomStop={(event) => setScale(event.state.scale)}
-            // onWheelStop={(event) => setScale(event.state.scale)}
-            wheel={{ step: WHEEL_STEP }}
-            pinch={{ step: WHEEL_STEP }}
-            doubleClick={{ step: WHEEL_STEP }}
-          >
-            {({ zoomIn, zoomOut, zoomToElement }) => (
-              <Fragment>
-                <Filters
-                  visibleLocationTypes={visibleLocationTypes}
-                  setVisibleLocationTypes={setVisibleLocationTypes}
-                  showConfirmedLocationsOnly={showConfirmedLocationsOnly}
-                  setShowConfirmedLocationsOnly={setShowConfirmedLocationsOnly}
-                  showFilters={showFilters}
-                  setShowFilters={setShowFilters}
-                />
+                if (IS_MOBILE) {
+                  setShowFilters(false);
+                  setVisibleMapPin(null);
+                }
+              }}
+              onPanningStop={() => setIsPanning(false)}
+              // onPinchingStop={(event) => setScale(event.state.scale)}
+              onZoomStop={(event) => setScale(event.state.scale)}
+              // onWheelStop={(event) => setScale(event.state.scale)}
+              wheel={{ step: WHEEL_STEP }}
+              pinch={{ step: WHEEL_STEP }}
+              doubleClick={{ step: WHEEL_STEP }}
+              limitToBounds
+            >
+              {({ zoomIn, zoomOut, zoomToElement }) => (
+                <Fragment>
+                  <Filters
+                    visibleLocationTypes={visibleLocationTypes}
+                    setVisibleLocationTypes={setVisibleLocationTypes}
+                    showConfirmedLocationsOnly={showConfirmedLocationsOnly}
+                    setShowConfirmedLocationsOnly={
+                      setShowConfirmedLocationsOnly
+                    }
+                    showFilters={showFilters}
+                    setShowFilters={setShowFilters}
+                  />
 
-                <ZoomControls
-                  zoomIn={() => {
-                    setScale(
-                      scale > MAX_SCALE - WHEEL_STEP
-                        ? MAX_SCALE
-                        : roundNumber(scale + WHEEL_STEP)
-                    );
-                    zoomIn(WHEEL_STEP);
-                  }}
-                  zoomOut={() => {
-                    setScale(
-                      scale < MIN_SCALE + WHEEL_STEP
-                        ? MIN_SCALE
-                        : roundNumber(scale - WHEEL_STEP)
-                    );
-                    zoomOut(WHEEL_STEP);
-                  }}
-                />
-                {/* {shouldInstructionsBeShown && (
+                  <ZoomControls
+                    zoomIn={() => {
+                      setScale(
+                        scale > MAX_SCALE - WHEEL_STEP
+                          ? MAX_SCALE
+                          : roundNumber(scale + WHEEL_STEP)
+                      );
+                      zoomIn(WHEEL_STEP);
+                    }}
+                    zoomOut={() => {
+                      setScale(
+                        scale < MIN_SCALE + WHEEL_STEP
+                          ? MIN_SCALE
+                          : roundNumber(scale - WHEEL_STEP)
+                      );
+                      zoomOut(WHEEL_STEP);
+                    }}
+                  />
+                  {/* {shouldInstructionsBeShown && (
                   <p>
                     Use your keyboard arrows{" "}
                     <span aria-hidden="true">or click</span> to navigate
                   </p>
                 )} */}
-                {VISIBLE_LOCATIONS.map((location, locationIndex) => (
-                  <MapTooltip
-                    key={`tooltip-${location.id}`}
-                    controlledVisible={visibleMapPin === location.id}
-                    {...location}
-                  />
-                ))}
-                <TransformComponent
-                  wrapperStyle={{
-                    width: "100%",
-                    height: "100vh",
-                    position: "relative",
-                  }}
-                >
-                  <motion.div
-                    className={styles.map}
-                    style={
-                      {
-                        "--pin-scale": PIN_SCALE < 0.5 ? 0.5 : PIN_SCALE,
-                        cursor: isPanning ? "grabbing" : "grab",
-                      } as CSSProperties
-                    }
-                    initial={{ opacity: 0 }}
-                    animate={{
-                      opacity: 1,
-                      transition: {
-                        duration: 0.75,
-                        type: "tween",
-                        ease: "easeOut",
-                      },
-                    }}
-                    exit={{
-                      opacity: 0,
-                      transition: {
-                        duration: 0.5,
-                        type: "tween",
-                        ease: "easeIn",
-                      },
+                  {VISIBLE_LOCATIONS.map((location, locationIndex) => (
+                    <MapTooltip
+                      key={`tooltip-${location.id}`}
+                      controlledVisible={visibleMapPin === location.id}
+                      {...location}
+                    />
+                  ))}
+                  <TransformComponent
+                    wrapperStyle={{
+                      width: "100%",
+                      height: "100vh",
+                      position: "relative",
                     }}
                   >
-                    <Image
-                      src="/assets/map.jpg"
-                      alt="Map of Hawkins"
-                      width="1512"
-                      height="1700"
-                      // onClick={() => setVisibleMapPin(null)}
-                    />
-
-                    {VISIBLE_LOCATIONS.map((location, locationIndex) => (
-                      <MapPin
-                        key={location.id}
-                        controlledVisible={visibleMapPin === location.id}
-                        setControlledVisible={(isVisible: boolean) => {
-                          activateTab(isVisible ? locationIndex : null);
-
-                          if (isVisible) {
-                            setShowFilters(false);
-                          }
-                        }}
-                        zoomIn={() => {
-                          const NEW_SCALE =
-                            scale > 1 ? scale : IS_MOBILE ? 1.5 : 1.2;
-                          zoomToElement(
-                            `${location.id}-tab-control`,
-                            NEW_SCALE
-                          );
-                          setScale(NEW_SCALE);
-                        }}
-                        isSecondary={
-                          visibleMapPin ? visibleMapPin !== location.id : false
+                    <AnimatePresence>
+                      <motion.div
+                        className={styles.map}
+                        style={
+                          {
+                            "--pin-scale": PIN_SCALE < 0.5 ? 0.5 : PIN_SCALE,
+                            cursor: isPanning ? "grabbing" : "grab",
+                          } as CSSProperties
                         }
-                        buttonProps={getButtonProps(location.id)}
-                        {...location}
-                      />
-                    ))}
-                  </motion.div>
-                </TransformComponent>
-              </Fragment>
-            )}
-          </TransformWrapper>
-        </div>
-      </main>
+                        initial={{ opacity: 0 }}
+                        animate={{
+                          opacity: isImageReady ? 1 : 0,
+                          transition: {
+                            duration: 0.75,
+                            type: "tween",
+                            ease: "easeOut",
+                          },
+                        }}
+                        exit={{
+                          opacity: 0,
+                          transition: {
+                            duration: 0.5,
+                            type: "tween",
+                            ease: "easeIn",
+                          },
+                        }}
+                      >
+                        <Image
+                          src="/assets/map.jpg"
+                          alt="Map of Hawkins"
+                          width="1512"
+                          height="1700"
+                          onLoad={() => setIsImageReady(true)}
+                          // onClick={() => setVisibleMapPin(null)}
+                        />
+
+                        {VISIBLE_LOCATIONS.map((location, locationIndex) => (
+                          <MapPin
+                            key={location.id}
+                            controlledVisible={visibleMapPin === location.id}
+                            setControlledVisible={(isVisible: boolean) => {
+                              activateTab(isVisible ? locationIndex : null);
+
+                              if (isVisible) {
+                                setShowFilters(false);
+                              }
+                            }}
+                            zoomIn={() => {
+                              const NEW_SCALE =
+                                scale > 1 ? scale : IS_MOBILE ? 1.5 : 1.2;
+                              zoomToElement(
+                                `${location.id}-tab-control`,
+                                NEW_SCALE
+                              );
+                              setScale(NEW_SCALE);
+                            }}
+                            isSecondary={
+                              visibleMapPin
+                                ? visibleMapPin !== location.id
+                                : false
+                            }
+                            buttonProps={getButtonProps(location.id)}
+                            {...location}
+                          />
+                        ))}
+                      </motion.div>
+                    </AnimatePresence>
+                  </TransformComponent>
+                </Fragment>
+              )}
+            </TransformWrapper>
+          </div>
+        </main>
+      </AnimatePresence>
     </>
   );
 }

@@ -5,10 +5,12 @@
   font-family: var(--mono-type);
   font-weight: 700;
   font-size: 1.4rem;
-  line-height: 1.2;
   border: 1px solid var(--secondary-text-color);
   text-decoration: none;
   margin: 0;
+  display: flex;
+  align-items: center;
+  max-width: max-content;
 
   &:focus {
     outline: none;

@@ -62,7 +62,12 @@
       transition: inherit;
     }
 
-    &:hover {
+    &:focus {
+      outline: none;
+    }
+
+    &:hover,
+    &:focus-visible {
       opacity: 1;
       z-index: 3;
 
@@ -138,5 +143,6 @@
 button[aria-current="location"] {
   .number {
     background-color: var(--starcourt-pink);
+    box-shadow: 0px 0px 0px 2px var(--starcourt-bg-color), 0px 0px 0px 4px var(--starcourt-pink);
   }
 }

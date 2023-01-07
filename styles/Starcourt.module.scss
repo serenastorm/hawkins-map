@@ -109,3 +109,33 @@
     top: var(--page-padding);
   }
 }
+
+.floorNumber {
+  position: fixed;
+  z-index: 30;
+  bottom: var(--page-padding);
+  right: var(--page-padding);
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--text-color);
+  font-size: 2rem;
+  text-transform: uppercase;
+  font-family: var(--mono-type);
+
+  @media (max-width: 799.99px) {
+    display: none;
+  }
+
+  .number {
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--starcourt-pink);
+    color: var(--starcourt-bg-color);
+    width: 2em;
+    height: 2em;
+  }
+}

@@ -91,7 +91,7 @@ export const MapPin = ({
         }
       ></div>
       {IS_STARCOURT_PIN ? (
-        <a {...starcourtPinProps}>
+        <a {...starcourtPinProps} title=" Explore the Starcourt Mall">
           <StarcourtLogomark />
         </a>
       ) : (

@@ -41,6 +41,10 @@
       &::before {
         background-color: var(--starcourt-blue);
       }
+
+      & > svg {
+        transform: scale(1.1);
+      }
     }
 
     &:not(.starcourtPin) {

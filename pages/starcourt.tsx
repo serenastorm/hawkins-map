@@ -22,6 +22,7 @@ import styles from "../styles/Starcourt.module.scss";
 export default function Starcourt() {
   const BASE_IMAGE_SIZE = { width: 2048, height: 1288 };
   const windowDimensions = useWindowDimensions();
+  const [isImageReady, setIsImageReady] = useState<boolean>(false);
   const [scale, setScale] = useState<number>(1);
   const [showFloorPicker, setShowFloorPicker] = useState<boolean>(false);
   const [isPanning, setIsPanning] = useState<boolean>(false);
@@ -64,134 +65,91 @@ export default function Starcourt() {
         <link rel="icon" href="/favicon.ico" />
         <meta name="theme-color" content="#3057e1" />
       </Head>
-      <main>
-        <div className={styles.mapWrapper}>
-          <div className={styles.background}>
-            <motion.div
-              className={styles.horizontalLines}
-              initial={{ scaleY: 0 }}
-              animate={{
-                scaleY: 1,
-                transition: { duration: 1.5, type: "tween", ease: "easeOut" },
-              }}
-              exit={{
-                scaleY: 0,
-                transition: { duration: 0.2, type: "tween", ease: "easeIn" },
-              }}
-            />
-            <motion.div
-              className={styles.verticalLines}
-              initial={{ scaleX: 0 }}
-              animate={{
-                scaleX: 1,
-                transition: { duration: 1.5, type: "tween", ease: "easeOut" },
-              }}
-              exit={{
-                scaleX: 0,
-                transition: { duration: 0.2, type: "tween", ease: "easeIn" },
-              }}
-            />
-          </div>
-          <TransformWrapper
-            key="starcourt-map"
-            initialScale={scale}
-            maxScale={MAX_SCALE}
-            // centerOnInit
-            onPanningStart={() => setIsPanning(true)}
-            onPanningStop={() => setIsPanning(false)}
-            // onPinchingStop={(event) => setScale(event.state.scale)}
-            onZoomStop={(event) => setScale(event.state.scale)}
-            // onWheelStop={(event) => setScale(event.state.scale)}
-            wheel={{ step: WHEEL_STEP }}
-            pinch={{ step: WHEEL_STEP }}
-            doubleClick={{ step: WHEEL_STEP }}
-          >
-            {({ zoomIn, zoomOut, zoomToElement }) => (
-              <Fragment>
-                <motion.div
-                  className={styles.backBtn}
-                  initial={{ x: "-100%", opacity: 0 }}
-                  animate={{
-                    x: 0,
-                    opacity: 1,
-                    transition: {
-                      duration: 1,
-                      type: "tween",
-                      ease: "easeOut",
-                    },
-                  }}
-                  exit={{
-                    x: "-100%",
-                    opacity: 0,
-                    transition: {
-                      duration: 0.2,
-                      type: "tween",
-                      ease: "easeIn",
-                    },
-                  }}
-                >
-                  <Button href="/" label="Back to Hawkins" variant="light" />
-                  <Button
-                    onClick={() => setShowFloorPicker(!showFloorPicker)}
-                    label="Change floor"
-                    variant="light"
-                  />
-                </motion.div>
-
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{
-                    opacity: 1,
-                    transition: {
-                      duration: 1,
-                      type: "tween",
-                      ease: "easeOut",
-                    },
-                  }}
-                  exit={{
-                    opacity: 0,
-                    transition: {
-                      duration: 0.2,
-                      type: "tween",
-                      ease: "easeIn",
-                    },
-                  }}
-                  className={styles.logo}
-                >
-                  <Image
-                    src="/assets/starcourt-mall-logo.svg"
-                    alt="Starcourt Mall Logo"
-                    width="819"
-                    height="236"
-                  />
-                </motion.div>
-                <FloorPicker
-                  currentFloor={currentFloor}
-                  setCurrentFloor={setCurrentFloor}
-                  showPicker={showFloorPicker}
-                  setShowPicker={setShowFloorPicker}
-                />
-                <TransformComponent
-                  wrapperStyle={{
-                    width: "100%",
-                    height: "100vh",
-                    position: "relative",
-                  }}
-                >
+      <AnimatePresence>
+        <main>
+          <div className={styles.mapWrapper}>
+            <div className={styles.background}>
+              <motion.div
+                className={styles.horizontalLines}
+                initial={{ scaleY: 0 }}
+                animate={{
+                  scaleY: 1,
+                  transition: { duration: 1.5, type: "tween", ease: "easeOut" },
+                }}
+                exit={{
+                  scaleY: 0,
+                  transition: { duration: 0.2, type: "tween", ease: "easeIn" },
+                }}
+              />
+              <motion.div
+                className={styles.verticalLines}
+                initial={{ scaleX: 0 }}
+                animate={{
+                  scaleX: 1,
+                  transition: { duration: 1.5, type: "tween", ease: "easeOut" },
+                }}
+                exit={{
+                  scaleX: 0,
+                  transition: { duration: 0.2, type: "tween", ease: "easeIn" },
+                }}
+              />
+            </div>
+            <TransformWrapper
+              key="starcourt-map"
+              initialScale={scale}
+              maxScale={MAX_SCALE}
+              centerOnInit
+              onPanningStart={() => setIsPanning(true)}
+              onPanningStop={() => setIsPanning(false)}
+              // onPinchingStop={(event) => setScale(event.state.scale)}
+              onZoomStop={(event) => setScale(event.state.scale)}
+              // onWheelStop={(event) => setScale(event.state.scale)}
+              wheel={{ step: WHEEL_STEP }}
+              pinch={{ step: WHEEL_STEP }}
+              doubleClick={{ step: WHEEL_STEP }}
+            >
+              {({ zoomIn, zoomOut, zoomToElement }) => (
+                <Fragment>
                   <motion.div
-                    className={styles.map}
-                    style={
-                      {
-                        "--base-map-width": imageSize.width,
-                        "--base-map-height": imageSize.height,
-                        cursor: isPanning ? "grabbing" : "grab",
-                      } as CSSProperties
-                    }
+                    className={styles.backBtn}
+                    initial={{ x: "-100%", opacity: 0 }}
+                    animate={{
+                      x: 0,
+                      opacity: 1,
+                      transition: {
+                        duration: 1,
+                        type: "tween",
+                        ease: "easeOut",
+                      },
+                    }}
+                    exit={{
+                      x: "-100%",
+                      opacity: 0,
+                      transition: {
+                        duration: 0.2,
+                        type: "tween",
+                        ease: "easeIn",
+                      },
+                    }}
+                  >
+                    <Button
+                      href="/"
+                      label="← Back to Hawkins"
+                      variant="light"
+                    />
+                    <Button
+                      onClick={() => setShowFloorPicker(!showFloorPicker)}
+                      label={showFloorPicker ? "Cancel" : "Change floor"}
+                      variant="light"
+                    />
+                  </motion.div>
+
+                  <motion.div
                     initial={{ opacity: 0 }}
                     animate={{
-                      opacity: showFloorPicker ? 0 : 1,
+                      opacity: 1,
                       transition: {
-                        duration: 0.75,
+                        duration: 1,
                         type: "tween",
                         ease: "easeOut",
                       },
@@ -199,73 +157,164 @@ export default function Starcourt() {
                     exit={{
                       opacity: 0,
                       transition: {
-                        duration: 0.5,
+                        duration: 0.2,
+                        type: "tween",
+                        ease: "easeIn",
+                      },
+                    }}
+                    className={styles.logo}
+                  >
+                    <Image
+                      src="/assets/starcourt-mall-logo.svg"
+                      alt="Starcourt Mall Logo"
+                      width="819"
+                      height="236"
+                    />
+                  </motion.div>
+                  <FloorPicker
+                    currentFloor={currentFloor}
+                    setCurrentFloor={setCurrentFloor}
+                    showPicker={showFloorPicker}
+                    setShowPicker={setShowFloorPicker}
+                  />
+                  <motion.p
+                    className={styles.floorNumber}
+                    initial={{ opacity: 0 }}
+                    animate={{
+                      opacity: 1,
+                      transition: {
+                        duration: 1,
+                        type: "tween",
+                        ease: "easeOut",
+                      },
+                    }}
+                    exit={{
+                      opacity: 0,
+                      transition: {
+                        duration: 0.2,
                         type: "tween",
                         ease: "easeIn",
                       },
                     }}
                   >
-                    <Image
-                      src={`/assets/starcourt-mall-floor-${currentFloor}.svg`}
-                      alt="Starcourt Mall Blueprint"
-                      width={imageSize.width}
-                      height={imageSize.height}
-                      useMap="#starcourtMallMap"
-                      // onClick={() => setVisibleMapPin(null)}
-                    />
+                    Floor <span className={styles.number}>{currentFloor}</span>
+                  </motion.p>
 
-                    <map
-                      name="starcourtMallMap"
-                      id="starcourtMallMap"
-                      //   onMouseOver={() => console.log("mouseOver parent")}
-                    >
-                      {locations.map((location) => (
-                        <area
-                          key={location.id}
-                          shape="poly"
-                          coords={locations[0].coords
-                            .map(
-                              (coord) =>
-                                `${
-                                  (coord.x * imageSize.width) /
-                                  BASE_IMAGE_SIZE.width
-                                },${
-                                  (coord.y * imageSize.height) /
-                                  BASE_IMAGE_SIZE.height
-                                }`
-                            )
-                            .join(", ")}
-                          href={`#${location.id}`}
-                          //   title={location.title}
-                          alt={location.title}
-                          //   id={`${location.id}-map-area`}
-                          onMouseOver={() => setHighlightedMapArea(location.id)}
-                          onMouseLeave={() => setHighlightedMapArea(null)}
-                        />
-                      ))}
-                    </map>
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="2048"
-                      height="1288"
-                      fill="none"
-                      viewBox="0 0 2048 1288"
-                    >
-                      <path
-                        fill="aliceblue"
-                        d="M666.5 982.5v70.5H699v10.5h22v-14h53.5v-67h-108z"
-                        fillOpacity={
-                          highlightedMapArea === "scoops-ahoy" ? 0.5 : 0
-                        }
-                      />
-                    </svg>
-                  </motion.div>
-                </TransformComponent>
-              </Fragment>
-            )}
-          </TransformWrapper>
-        </div>
-      </main>
+                  <TransformComponent
+                    wrapperStyle={{
+                      width: "100%",
+                      height: "100vh",
+                      position: "relative",
+                    }}
+                  >
+                    <AnimatePresence>
+                      {!showFloorPicker && (
+                        <motion.div
+                          className={styles.map}
+                          style={
+                            {
+                              "--base-map-width": imageSize.width,
+                              "--base-map-height": imageSize.height,
+                              cursor: isPanning ? "grabbing" : "grab",
+                            } as CSSProperties
+                          }
+                          initial={{
+                            opacity: 0,
+                          }}
+                          animate={{
+                            opacity: isImageReady ? 1 : 0,
+                            // rotateX: 0,
+                            // rotateY: 0,
+                            // rotateZ: 0,
+                            // skewX: 0,
+                            // skewY: 0,
+                            transition: {
+                              duration: 1,
+                              type: "tween",
+                              ease: "easeOut",
+                            },
+                          }}
+                          exit={{
+                            opacity: 0,
+                            // rotateX: "45deg",
+                            // rotateY: "5deg",
+                            // rotateZ: "-49deg",
+                            // skewX: "1deg",
+                            // skewY: "19deg",
+                            transition: {
+                              duration: 0.35,
+                              type: "tween",
+                              ease: "easeIn",
+                            },
+                          }}
+                        >
+                          <Image
+                            src={`/assets/starcourt-mall-floor-${currentFloor}.svg`}
+                            alt="Starcourt Mall Blueprint"
+                            width={imageSize.width}
+                            height={imageSize.height}
+                            useMap="#starcourtMallMap"
+                            onLoad={() => setIsImageReady(true)}
+                            // onClick={() => setVisibleMapPin(null)}
+                          />
+
+                          <map
+                            name="starcourtMallMap"
+                            id="starcourtMallMap"
+                            //   onMouseOver={() => console.log("mouseOver parent")}
+                          >
+                            {locations.map((location) => (
+                              <area
+                                key={location.id}
+                                shape="poly"
+                                coords={locations[0].coords
+                                  .map(
+                                    (coord) =>
+                                      `${
+                                        (coord.x * imageSize.width) /
+                                        BASE_IMAGE_SIZE.width
+                                      },${
+                                        (coord.y * imageSize.height) /
+                                        BASE_IMAGE_SIZE.height
+                                      }`
+                                  )
+                                  .join(", ")}
+                                href={`#${location.id}`}
+                                //   title={location.title}
+                                alt={location.title}
+                                //   id={`${location.id}-map-area`}
+                                onMouseOver={() =>
+                                  setHighlightedMapArea(location.id)
+                                }
+                                onMouseLeave={() => setHighlightedMapArea(null)}
+                              />
+                            ))}
+                          </map>
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="2048"
+                            height="1288"
+                            fill="none"
+                            viewBox="0 0 2048 1288"
+                          >
+                            <path
+                              fill="aliceblue"
+                              d="M666.5 982.5v70.5H699v10.5h22v-14h53.5v-67h-108z"
+                              fillOpacity={
+                                highlightedMapArea === "scoops-ahoy" ? 0.5 : 0
+                              }
+                            />
+                          </svg>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </TransformComponent>
+                </Fragment>
+              )}
+            </TransformWrapper>
+          </div>
+        </main>
+      </AnimatePresence>
     </>
   );
 }

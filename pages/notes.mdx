@@ -1,53 +1,66 @@
 import Link from "next/link";
-import { LocationStatusChip } from "components";
+import { Button, LocationStatusChip } from "components";
 
 import styles from "styles/Notes.module.scss";
 
 <main className={styles.notes}>
 
-<Link href="/">Back to map</Link>
+<Button href="/" label="← Back to map" size="sm" />
 
 <h1 className="screenReaderText">Notes</h1>
 
 ## Labels
 
-<LocationStatusChip status="confirmed" /> The location name appears on the map and
-can be placed with near absolute certainty\
-<LocationStatusChip status="approx" /> The location is known to be in the area\
-<LocationStatusChip status="maybe" /> The location cannot be confirmed
+<dl>
+    <dt><LocationStatusChip status="confirmed" /></dt>
+    <dd>The location name appears on the map and can be placed with near absolute certainty</dd>
+    <dt><LocationStatusChip status="approx" /></dt>
+    <dd>The location is known to be in the area</dd>
+    <dt><LocationStatusChip status="maybe" /></dt>
+    <dd>The location cannot be confirmed</dd>
+</dl>
 
 ## Sources
 
-The background map is from the Stranger Things companion book, _Stranger Things: Worlds Turned Upside Down: The Official Behind-The-Scenes Companion_. It's used by Hopper in season 2 to add decay markers after visiting the pumpkin patches. The markers are still visible on the map, around Hawkins National Laboratory.
+The Hawkins map is from the Stranger Things companion book, _Stranger Things: Worlds Turned Upside Down: The Official Behind-The-Scenes Companion_. It's used by Hopper in season 2 to add decay markers after visiting the pumpkin patches. The markers are still visible on the map, around Hawkins National Laboratory.
 In season 3, episode 4, Joyce and Jim look at an old map in Mayor Kline's house; this map and the dialogue is inconsistent with the one used here.
 
-> Hess Farm, Henry's place, Bullocks. Look, they're all here. They're all in Southeast Hawkins, right near Jordan Lake [and] the power plant.
+> Hess Farm, Henry's place, Bullocks. Look, they're all here. They're all in Southeast Hawkins, right near Jordan Lake. And what else is near Jordan Lake? The power plant.
+>
+> <cite>Joyce and Hopper, S2E4</cite>
 
 On our map, Jordan Lake is not in Southeast Hawkins, and it's nowhere near Starcourt Mall, which is supposed to be built on or around Hess Farm.
 
+The [Starcourt](/starcourt) blueprints are based off designs from production designer Chris Trujillo ([Source](https://deadline.com/2020/06/stranger-things-production-designer-chris-trujillo-netflix-the-art-of-craft-interview-1202950693/)).
+
 ## Inconsistencies
 
-- Benny's Burgers is at 4819 Randolph Lane but Murray's map places it somewhere on Randolph Way
-- The Wheelers and Sinclairs live on Maple Street but the map only has a Maple Avenue
+- Benny's Burgers is at 4819 Randolph Lane but Murray's map places it somewhere on Randolph Way, so the map might not be correctly labelled
+- The Wheelers and Sinclairs live on Maple Street but the map only has a Maple Avenue. However, the Maple on the map crosses Dearborn, so it could be another labelling error
+  > “Meet me at Dearborn and Maple at 8:00. To study."
+  >
+  > <cite>Nancy to Steve, S1E1</cite>
 - Mrs Driscoll lives at 4819 Cornwallis Road but the map only has a Cornwallis Way
 
 ## Missing locations
 
-- Brimborn Steel Works (6522 Cherry Oak Drive)
-- Creel House (Morehead Street)
+- Brimborn Steel Works (<address>6522 Cherry Oak Drive</address>)
+- Creel House (<address>Morehead Street</address>)
 - Curse Gate 2 (Victim: Fred Benson)
-- Driscoll House (4819 Cornwallis Road)
+- Driscoll House (<address>4819 Cornwallis Road</address>)
 - Enzo's
 - Family Video
-- Hargrove House (4819 Cherry Lane)
+- Hargrove House (<address>4819 Cherry Lane</address>)
 - Hawkins Community Pool
 - Hawkins Memorial Hospital
 - Henderson House
 - Holloway House (1438 Unknown Street)
 - Hopper's cabin (probably close to the Fun Fair and Weathertop)
   > “Take Denfield, then you’ll see a large oak tree. You’re gonna swing a right. That road is gonna dead-end. And it’s about a five-minute walk from there."
+  >
+  > <cite>Hopper to Jonathan, S2E9</cite>
 - Hopper's trailer (lakeside, might be near Lover's Lake)
-- Junkyard (near railroad tracks))
+- Junkyard (near railroad tracks)
 - Merill's Pumpkin Patch (probably on one of the markers)
 - Palace Arcade
 - Roane County Fair/Fun Fair
@@ -55,9 +68,14 @@ On our map, Jordan Lake is not in Southeast Hawkins, and it's nowhere near Starc
 - The War Zone
 - Weathertop (probably near Hopper's cabin)
 
-## Disclaimer/Credits
+## Contributing
 
-This website is not affiliated with Netflix. All characters, locations, and images are the property of Netflix. This is intended to be fan art &#9786;\
-Made by <a href="https://www.antonettiserena.com" target="_blank" rel="noopener noreferrer">Serena</a>
+If you have any suggestions, feel free to [open an issue](https://github.com/serenastorm/hawkins-map/issues).
+
+## Disclaimer + Credits
+
+This website is not affiliated with Netflix. All characters, locations, and images are the property of Netflix.\
+The background particles code was based off [this Codepen](https://codepen.io/soluml/pen/DvagNZ).\
+&#9996; Made by <a href="https://www.antonettiserena.com" target="_blank" rel="noopener noreferrer">Serena</a>
 
 </main>

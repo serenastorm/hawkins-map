@@ -12,10 +12,19 @@ export type LocationCategory =
   | "hospital";
 export type LocationStatus = "confirmed" | "approx" | "maybe";
 
+type LocationWithSourceOrDescription =
+  | {
+      description?: never;
+      source?: { quote: string; author: string };
+    }
+  | {
+      description?: string;
+      source?: never;
+    };
+
 export type Location = {
   id: string;
   address?: string;
-  description?: string;
   category: LocationCategory;
   coordinates: {
     x: number;
@@ -24,9 +33,8 @@ export type Location = {
   img?: string;
   title: string;
   status: LocationStatus;
-
   priority: number;
-};
+} & LocationWithSourceOrDescription;
 
 export type LocationType =
   | "Government facility"
@@ -77,8 +85,8 @@ export const LOCATION_TYPES: {
 ];
 
 const MAPLE_NOTES =
-  'This is labelled Maple Avenue, not Maple Street, but Nancy tells Jonathan to meets her "at the corner of Maple and Dearborn" and Dearborn crosses Maple Avenue, so it could be an error on the map.';
-const MURRAYS_MAP_NOTES = "Location estimated using Murray Bauman's map";
+  'This is labelled Maple Avenue, not Maple Street, but Nancy tells Steve to meet her "at the corner of Maple and Dearborn" (S1E1) and Dearborn crosses Maple Avenue, so it could be a labelling.';
+const MURRAYS_MAP_NOTES = "Location estimated using Murray Bauman's map (S1E5)";
 
 export const locations: Location[] = [
   {
@@ -353,6 +361,10 @@ export const locations: Location[] = [
     img: "/assets/van-flip.jpg",
     title: "Van flip",
     status: "confirmed",
+    source: {
+      quote: "— Where are you? — Cornwallis! — Meet me at Elm & Cherry.",
+      author: "Lucas and Dustin, S1E7",
+    },
     priority: 2,
   },
 
@@ -366,6 +378,10 @@ export const locations: Location[] = [
     img: "/assets/mirkwood.jpg",
     title: "Mirkwood",
     status: "confirmed",
+    source: {
+      quote: "It's where Cornwallis and Kerley meet.",
+      author: "Mike to Hopper, S1E1",
+    },
     priority: 1,
   },
   {
