@@ -13,6 +13,7 @@ import type { CSSProperties, KeyboardEvent } from "react";
 // import { Inter } from "@next/font/google";
 
 export default function Home() {
+  const BASE_MAP_SIZE = { width: 1512, height: 1700 };
   const [scale, setScale] = useState<number>(1);
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [visibleMapPin, setVisibleMapPin] = useState<string | null>(null);
@@ -225,6 +226,8 @@ export default function Home() {
                         className={styles.map}
                         style={
                           {
+                            "--base-map-width": BASE_MAP_SIZE.width,
+                            "--base-map-height": BASE_MAP_SIZE.height,
                             "--pin-scale": PIN_SCALE < 0.5 ? 0.5 : PIN_SCALE,
                             cursor: isPanning ? "grabbing" : "grab",
                           } as CSSProperties
@@ -250,8 +253,8 @@ export default function Home() {
                         <Image
                           src="/assets/map.jpg"
                           alt="Map of Hawkins"
-                          width="1512"
-                          height="1700"
+                          width={BASE_MAP_SIZE.width}
+                          height={BASE_MAP_SIZE.height}
                           onLoad={() => setIsImageReady(true)}
                           // onClick={() => setVisibleMapPin(null)}
                         />

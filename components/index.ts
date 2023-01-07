@@ -1,3 +1,4 @@
+export { AnimatedText } from "./AnimatedText";
 export { Button } from "./Button";
 export { Filters } from "./Filters";
 export { FloorPicker } from "./FloorPicker";

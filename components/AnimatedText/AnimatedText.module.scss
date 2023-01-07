@@ -1,0 +1,29 @@
+.animatedText {
+  position: absolute;
+  z-index: 40;
+  left: calc(699 / var(--base-map-width) * 100%);
+  top: calc(835 / var(--base-map-height) * 100%);
+  height: calc(70 / var(--base-map-height) * 100%);
+  width: auto;
+
+  path {
+    stroke-dasharray: 140;
+    stroke-dashoffset: 140;
+    stroke-linecap: round;
+    animation: dash 100ms ease-in-out forwards;
+
+    stroke: var(--starcourt-blue);
+
+    @for $i from 1 through 20 {
+      &:nth-child(#{$i}) {
+        animation-delay: #{$i * 100}ms;
+      }
+    }
+  }
+}
+
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}

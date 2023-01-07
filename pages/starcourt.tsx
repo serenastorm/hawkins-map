@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, Fragment } from "react";
+import { useEffect, useState, Fragment } from "react";
 import Image from "next/image";
 import Head from "next/head";
 import { AnimatePresence, motion } from "framer-motion";
@@ -6,6 +6,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import { locations } from "@/constants/starcourt-locations";
 import { useWindowDimensions } from "@/infrastructure/hooks";
 import {
+  AnimatedText,
   Button,
   FloorPicker,
   MapPin,
@@ -33,7 +34,6 @@ export default function Starcourt() {
   const [highlightedMapArea, setHighlightedMapArea] =
     useState<StarCourtLocationFloor1 | null>(null);
 
-  const MIN_SCALE = 1;
   const MAX_SCALE = 3;
   const WHEEL_STEP = 0.2;
 
@@ -94,6 +94,7 @@ export default function Starcourt() {
                 }}
               />
             </div>
+
             <TransformWrapper
               key="starcourt-map"
               initialScale={scale}
@@ -171,6 +172,7 @@ export default function Starcourt() {
                       height="236"
                     />
                   </motion.div>
+
                   <FloorPicker
                     currentFloor={currentFloor}
                     setCurrentFloor={setCurrentFloor}
@@ -213,8 +215,10 @@ export default function Starcourt() {
                           className={styles.map}
                           style={
                             {
-                              "--base-map-width": imageSize.width,
-                              "--base-map-height": imageSize.height,
+                              "--base-map-width": BASE_IMAGE_SIZE.width,
+                              "--base-map-height": BASE_IMAGE_SIZE.height,
+                              "--map-width": imageSize.width,
+                              "--map-height": imageSize.height,
                               cursor: isPanning ? "grabbing" : "grab",
                             } as CSSProperties
                           }
@@ -258,6 +262,73 @@ export default function Starcourt() {
                             // onClick={() => setVisibleMapPin(null)}
                           />
 
+                          {currentFloor === 1 && (
+                            <div className={styles.locations}>
+                              {locations.map((location) => {
+                                const MIN_X = Math.min(
+                                  ...location.coords.map((coords) => coords.x)
+                                );
+                                const MAX_X = Math.max(
+                                  ...location.coords.map((coords) => coords.x)
+                                );
+
+                                const MIN_Y = Math.min(
+                                  ...location.coords.map((coords) => coords.y)
+                                );
+                                const MAX_Y = Math.max(
+                                  ...location.coords.map((coords) => coords.y)
+                                );
+
+                                const LOCATION_WIDTH = MAX_X - MIN_X;
+                                const LOCATION_HEIGHT = MAX_Y - MIN_Y;
+
+                                return (
+                                  <Fragment key={location.id}>
+                                    <button
+                                      key={location.id}
+                                      aria-hidden="true"
+                                      tabIndex={-1}
+                                      onMouseOver={() =>
+                                        setHighlightedMapArea(location.id)
+                                      }
+                                      onMouseLeave={() =>
+                                        setHighlightedMapArea(null)
+                                      }
+                                      className={styles.location}
+                                      style={
+                                        {
+                                          "--location-x": MIN_X,
+                                          "--location-y": MIN_Y,
+                                          "--location-width": LOCATION_WIDTH,
+                                          "--location-height": LOCATION_HEIGHT,
+                                          "clip-path": `polygon(${locations[0].coords
+                                            .map(
+                                              (coord) =>
+                                                `${
+                                                  ((coord.x - MIN_X) /
+                                                    LOCATION_WIDTH) *
+                                                  100
+                                                }% ${
+                                                  ((coord.y - MIN_Y) /
+                                                    LOCATION_HEIGHT) *
+                                                  100
+                                                }%`
+                                            )
+                                            .join(", ")})`,
+                                        } as CSSProperties
+                                      }
+                                    />
+
+                                    <AnimatedText
+                                      show={
+                                        highlightedMapArea === "scoops-ahoy"
+                                      }
+                                    />
+                                  </Fragment>
+                                );
+                              })}
+                            </div>
+                          )}
                           <map
                             name="starcourtMallMap"
                             id="starcourtMallMap"
@@ -267,7 +338,7 @@ export default function Starcourt() {
                               <area
                                 key={location.id}
                                 shape="poly"
-                                coords={locations[0].coords
+                                coords={location.coords
                                   .map(
                                     (coord) =>
                                       `${
@@ -290,7 +361,7 @@ export default function Starcourt() {
                               />
                             ))}
                           </map>
-                          <svg
+                          {/* <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="2048"
                             height="1288"
@@ -304,7 +375,7 @@ export default function Starcourt() {
                                 highlightedMapArea === "scoops-ahoy" ? 0.5 : 0
                               }
                             />
-                          </svg>
+                          </svg> */}
                         </motion.div>
                       )}
                     </AnimatePresence>

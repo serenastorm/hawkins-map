@@ -1,10 +1,4 @@
 .mapWrapper {
-  --base-map-width: 2048;
-  --base-map-height: 1288;
-
-  // width: 100vw;
-  // height: 100vh;
-  // overflow: scroll;
   background-color: var(--starcourt-bg-color);
 }
 
@@ -13,9 +7,6 @@
   position: fixed;
   inset: 0;
   z-index: 0;
-  // background-image: url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg clip-path='url(%23clip0_88_12095)'%3E%3Crect width='40' height='40' stroke='%234C70EF'/%3E%3Crect y='40' width='40' height='40' stroke='%234C70EF'/%3E%3Crect x='40' width='40' height='40' stroke='%234C70EF'/%3E%3Crect x='40' y='40' width='40' height='40' stroke='%234C70EF'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='clip0_88_12095'%3E%3Crect width='80' height='80' fill='white'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E%0A");
-  // background-repeat: repeat;
-  // background-size: 40px;
 }
 
 .horizontalLines,
@@ -39,29 +30,16 @@
 .map {
   position: relative;
   z-index: 1;
-  //   width: var(--map-width);
-  //   height: calc(
-  //     var(--map-width) * (var(--base-map-height) / var(--base-map-width))
-  //   );
 
-  width: calc(var(--base-map-width) * 1px);
-  height: calc(var(--base-map-height) * 1px);
+  width: calc(var(--map-width) * 1px);
+  height: calc(var(--map-height) * 1px);
 
   img {
-    width: calc(var(--base-map-width) * 1px);
-    height: calc(var(--base-map-height) * 1px);
+    width: calc(var(--map-width) * 1px);
+    height: calc(var(--map-height) * 1px);
     position: relative;
     z-index: 0;
     aspect-ratio: var(--base-map-width) / var(--base-map-height);
-  }
-
-  svg {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
   }
 
   area {
@@ -138,4 +116,36 @@
     width: 2em;
     height: 2em;
   }
+}
+.locations {
+  position: absolute;
+  inset: 0;
+}
+
+.location {
+  position: absolute;
+  border-width: 0;
+  background-color: rgba(255, 255, 255, 0);
+
+  left: calc(var(--location-x) / var(--base-map-width) * 100%);
+  top: calc(var(--location-y) / var(--base-map-height) * 100%);
+  height: calc(var(--location-height) / var(--base-map-height) * 100%);
+  width: calc(var(--location-width) / var(--base-map-width) * 100%);
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.4);
+  }
+
+  // coords={locations[0].coords
+  //   .map(
+  //     (coord) =>
+  //       `${
+  //         (coord.x * imageSize.width) /
+  //         BASE_IMAGE_SIZE.width
+  //       },${
+  //         (coord.y * imageSize.height) /
+  //         BASE_IMAGE_SIZE.height
+  //       }`
+  //   )
+  //   .join(", ")}
 }
