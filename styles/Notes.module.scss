@@ -15,6 +15,7 @@ $content-width: clamp(
   & > p,
   blockquote p,
   li,
+  li > p,
   cite {
     font-size: 1.6rem;
     line-height: 170%;
@@ -23,6 +24,11 @@ $content-width: clamp(
   dd {
     margin: 8px 12px 16px 12px;
     font-size: 1.4rem;
+
+    p {
+      font: inherit;
+      color: inherit;
+    }
   }
 
   & > p,
