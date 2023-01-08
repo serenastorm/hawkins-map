@@ -1,0 +1,117 @@
+$image-size: 100vmin;
+$image-block-spacing: calc((100vh - $image-size) / 2);
+$image-inline-spacing: calc((100vw - $image-size) / 2);
+
+$bg-color: #080808;
+$red: #ac0001;
+
+.openingTitle {
+  position: fixed;
+  inset: 0;
+  z-index: 180;
+}
+
+.background,
+.title,
+.noise {
+  position: absolute;
+  inset: 0;
+}
+
+.title {
+  background: linear-gradient(180deg, $bg-color 0%, $bg-color 100%) left top
+      no-repeat,
+    linear-gradient(180deg, $bg-color 0%, $bg-color 100%) left top no-repeat,
+    url("/assets/opening-title.svg") $image-inline-spacing $image-block-spacing
+      no-repeat,
+    linear-gradient(180deg, $bg-color 0%, $bg-color 100%) right top no-repeat,
+    linear-gradient(180deg, $bg-color 0%, $bg-color 100%) left bottom no-repeat;
+  // Adding 1px here to cover glitches
+  background-size: calc($image-inline-spacing + 1px) 100vh,
+    100vw calc($image-block-spacing + 1px), $image-size $image-size,
+    calc($image-inline-spacing + 1px) 100vh,
+    100vw calc($image-block-spacing + 1px);
+  animation: backgroundZoom var(--animation-duration) ease-in-out forwards;
+  transform-origin: 50vw 50vh;
+}
+
+.background {
+  background-color: $bg-color;
+  animation: titleColorChange var(--animation-duration) ease-in-out forwards;
+}
+
+.noise {
+  background: url("/assets/background-noise.png"),
+    radial-gradient(50% 50% at 50% 50%, #340f0f 0%, $bg-color 100%);
+  mix-blend-mode: lighten;
+  animation: textureFade var(--animation-duration) ease-in-out forwards;
+}
+
+@keyframes titleColorChange {
+  0% {
+    background-color: $bg-color;
+    opacity: 1;
+  }
+
+  5% {
+    background-color: $red;
+    opacity: 1;
+  }
+
+  40% {
+    background-color: $red;
+    opacity: 1;
+  }
+
+  50% {
+    background-color: white;
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes backgroundZoom {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  80% {
+    opacity: 1;
+    transform: scale(10);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(10);
+  }
+}
+
+@keyframes textureFade {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  70% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

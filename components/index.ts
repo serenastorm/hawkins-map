@@ -5,4 +5,5 @@ export { FloorPicker } from "./FloorPicker";
 export { LocationStatusChip } from "./LocationStatusChip";
 export { MapPin } from "./MapPin";
 export { MapTooltip } from "./MapTooltip";
+export { OpeningTitle } from "./OpeningTitle";
 export { ZoomControls } from "./ZoomControls";

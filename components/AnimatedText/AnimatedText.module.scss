@@ -1,9 +1,9 @@
 .animatedText {
   position: absolute;
   z-index: 40;
-  left: calc(699 / var(--base-map-width) * 100%);
-  top: calc(835 / var(--base-map-height) * 100%);
-  height: calc(70 / var(--base-map-height) * 100%);
+  left: calc(var(--text-x) / var(--base-map-width) * 100%);
+  top: calc(var(--text-y) / var(--base-map-height) * 100%);
+  height: calc(var(--text-height) / var(--base-map-height) * 100%);
   width: auto;
 
   path {
@@ -11,14 +11,26 @@
     stroke-dashoffset: 140;
     stroke-linecap: round;
     animation: dash 100ms ease-in-out forwards;
-
     stroke: var(--starcourt-blue);
+    animation-iteration-count: 1;
 
-    @for $i from 1 through 20 {
+    @for $i from 1 through 30 {
       &:nth-child(#{$i}) {
         animation-delay: #{$i * 100}ms;
       }
     }
+  }
+
+  &.starcourtBase {
+    --text-x: 1097;
+    --text-y: 248;
+    --text-height: 124;
+  }
+
+  &.scoopsAhoy {
+    --text-x: 699;
+    --text-y: 835;
+    --text-height: 70;
   }
 }
 

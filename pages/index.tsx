@@ -3,16 +3,25 @@ import Image from "next/image";
 import Head from "next/head";
 import { AnimatePresence, motion } from "framer-motion";
 import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
-import styles from "../styles/Home.module.scss";
-import { locations, LOCATION_TYPES } from "@/constants/locations";
-import { Filters, MapPin, MapTooltip, ZoomControls } from "@/components";
+import { locations, LOCATION_TYPES } from "constants/locations";
+import {
+  Filters,
+  MapPin,
+  MapTooltip,
+  OpeningTitle,
+  ZoomControls,
+} from "components";
 import { roundNumber } from "@/infrastructure/utils/roundNumber";
-import type { LocationType } from "@/constants/locations";
+
+import type { LocationType } from "constants/locations";
 import type { AriaAttributes, CSSProperties, KeyboardEvent } from "react";
+import type { NextPage } from "next";
+
+import styles from "../styles/Home.module.scss";
 
 // import { Inter } from "@next/font/google";
 
-export default function Home() {
+const Home: NextPage = () => {
   const BASE_MAP_SIZE = { width: 1512, height: 1700 };
   const [scale, setScale] = useState<number>(1);
   const [showFilters, setShowFilters] = useState<boolean>(false);
@@ -124,7 +133,10 @@ export default function Home() {
 
     return {
       role: "tab",
-      "aria-selected": id === visibleMapPin ? "true" : "false" as AriaAttributes['aria-selected'],
+      "aria-selected":
+        id === visibleMapPin
+          ? "true"
+          : ("false" as AriaAttributes["aria-selected"]),
       "aria-controls": `${id}-tab`,
       id: `${id}-tab-control`,
       tabIndex: id === visibleMapPin ? 0 : -1,
@@ -146,6 +158,8 @@ export default function Home() {
       </Head>
       <AnimatePresence>
         <main>
+          <OpeningTitle />
+
           <div className={styles.mapWrapper}>
             <TransformWrapper
               key="hawkins-map"
@@ -299,4 +313,6 @@ export default function Home() {
       </AnimatePresence>
     </>
   );
-}
+};
+
+export default Home;

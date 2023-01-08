@@ -16,7 +16,7 @@ import {
 import { roundNumber } from "@/infrastructure/utils/roundNumber";
 import type { LocationType } from "@/constants/locations";
 import type { CSSProperties, KeyboardEvent } from "react";
-import type { StarCourtLocationFloor1 } from "@/constants/starcourt-locations";
+import type { StarCourtLocation } from "constants/starcourt-locations";
 
 import styles from "../styles/Starcourt.module.scss";
 
@@ -31,8 +31,9 @@ export default function Starcourt() {
     { width: 2048, height: 1288 }
   );
   const [currentFloor, setCurrentFloor] = useState<1 | 2>(1);
-  const [highlightedMapArea, setHighlightedMapArea] =
-    useState<StarCourtLocationFloor1 | null>(null);
+  const [highlightedMapArea, setHighlightedMapArea] = useState<
+    StarCourtLocation["id"] | null
+  >(null);
 
   const MAX_SCALE = 3;
   const WHEEL_STEP = 0.2;
@@ -301,7 +302,7 @@ export default function Starcourt() {
                                           "--location-y": MIN_Y,
                                           "--location-width": LOCATION_WIDTH,
                                           "--location-height": LOCATION_HEIGHT,
-                                          "clip-path": `polygon(${locations[0].coords
+                                          "clip-path": `polygon(${location.coords
                                             .map(
                                               (coord) =>
                                                 `${
@@ -320,9 +321,7 @@ export default function Starcourt() {
                                     />
 
                                     <AnimatedText
-                                      show={
-                                        highlightedMapArea === "scoops-ahoy"
-                                      }
+                                      mapArea={highlightedMapArea}
                                     />
                                   </Fragment>
                                 );

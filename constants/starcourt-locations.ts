@@ -1,4 +1,4 @@
-export type StarCourtLocationFloor1 = "scoops-ahoy";
+export type StarCourtLocationFloor1 = "scoops-ahoy" | "starcourt-base";
 
 export type StarCourtLocation = {
   id: StarCourtLocationFloor1;
@@ -7,10 +7,16 @@ export type StarCourtLocation = {
 };
 
 export const locations: StarCourtLocation[] = [
-  //   {
-  //     id: "starcourt-gate",
-  //     title: "Starcourt Gate",
-  //   },
+  {
+    id: "starcourt-base",
+    coords: [
+      { x: 968, y: 69 },
+      { x: 1097, y: 69 },
+      { x: 1097, y: 157 },
+      { x: 968, y: 157 },
+    ],
+    title: "Starcourt Base",
+  },
   {
     id: "scoops-ahoy",
     coords: [

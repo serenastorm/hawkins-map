@@ -133,19 +133,6 @@
   width: calc(var(--location-width) / var(--base-map-width) * 100%);
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
   }
-
-  // coords={locations[0].coords
-  //   .map(
-  //     (coord) =>
-  //       `${
-  //         (coord.x * imageSize.width) /
-  //         BASE_IMAGE_SIZE.width
-  //       },${
-  //         (coord.y * imageSize.height) /
-  //         BASE_IMAGE_SIZE.height
-  //       }`
-  //   )
-  //   .join(", ")}
 }

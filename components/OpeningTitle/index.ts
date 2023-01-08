@@ -1,0 +1,1 @@
+export { OpeningTitle } from "./OpeningTitle";
