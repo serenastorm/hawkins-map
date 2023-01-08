@@ -28,7 +28,7 @@
 
     &:first-of-type {
       order: 2;
-      margin-top: calc(var(--image-size) * -0.4);
+      margin-top: min(100px, calc(var(--image-size) * -0.3));
     }
 
     &:not(:first-of-type) {
@@ -123,7 +123,7 @@
   font-size: 2rem;
   text-transform: uppercase;
   transform: scaleX(1) scaleY(1) scaleZ(1) rotateX(45deg) rotateY(5deg)
-    rotateZ(-49deg) translateX(0px) translateY(0px) translateZ(0px) skewX(1deg)
+    rotateZ(-49deg) translateX(0px) translateY(0px) translateZ(10px) skewX(1deg)
     skewY(19deg);
   font-family: var(--mono-type);
 

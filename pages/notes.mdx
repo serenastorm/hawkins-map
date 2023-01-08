@@ -3,6 +3,8 @@ import { Button, LocationStatusChip } from "components";
 
 import styles from "styles/Notes.module.scss";
 
+<title>Hawkins Map</title>
+
 <main className={styles.notes}>
 
 <Button href="/" label="← Back to map" size="sm" />
@@ -12,12 +14,21 @@ import styles from "styles/Notes.module.scss";
 ## Labels
 
 <dl>
-    <dt><LocationStatusChip status="confirmed" /></dt>
-    <dd>The location name appears on the map and can be placed with near absolute certainty</dd>
-    <dt><LocationStatusChip status="approx" /></dt>
-    <dd>The location is known to be in the area</dd>
-    <dt><LocationStatusChip status="maybe" /></dt>
-    <dd>The location cannot be confirmed</dd>
+  <dt>
+    <LocationStatusChip status="confirmed" />
+  </dt>
+  <dd>
+    The location name appears on the map and can be placed with near absolute
+    certainty
+  </dd>
+  <dt>
+    <LocationStatusChip status="approx" />
+  </dt>
+  <dd>The location is known to be in the area</dd>
+  <dt>
+    <LocationStatusChip status="maybe" />
+  </dt>
+  <dd>The location cannot be confirmed</dd>
 </dl>
 
 ## Sources
