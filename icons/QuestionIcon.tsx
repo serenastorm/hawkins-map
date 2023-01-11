@@ -6,6 +6,7 @@ export const QuestionIcon = () => {
       height="16"
       fill="none"
       viewBox="0 0 16 16"
+      aria-hidden="true"
     >
       <path
         stroke="#06090A"

@@ -212,7 +212,7 @@ const Home: NextPage = () => {
                     }}
                   />
 
-                  {VISIBLE_LOCATIONS.map((location, locationIndex) => (
+                  {VISIBLE_LOCATIONS.map((location) => (
                     <MapTooltip
                       key={`tooltip-${location.id}`}
                       controlledVisible={visibleMapPin === location.id}
