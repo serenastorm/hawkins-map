@@ -29,13 +29,7 @@ export const MapPin = ({
   status,
   zoomIn,
 }: MapPinType) => {
-  const {
-    getArrowProps,
-    getTooltipProps,
-    setTooltipRef,
-    setTriggerRef,
-    visible,
-  } = usePopperTooltip({
+  const { setTriggerRef } = usePopperTooltip({
     trigger: null,
     placement: "top",
     closeOnOutsideClick: true,

@@ -1,7 +1,6 @@
-import { useState } from "react";
 import Image from "next/image";
-import { Button } from "components/Button";
 import { AnimatePresence, motion } from "framer-motion";
+import { floorPickerAnimation } from "./FloorPicker.animations";
 
 import styles from "./FloorPicker.module.scss";
 
@@ -24,15 +23,7 @@ export const FloorPicker = ({
         {showPicker && (
           <motion.nav
             className={styles.navigation}
-            initial={{ y: "100%" }}
-            animate={{
-              y: 0,
-              transition: { duration: 0.5, type: "tween", ease: "easeOut" },
-            }}
-            exit={{
-              y: "100%",
-              transition: { duration: 0.2, type: "tween", ease: "easeIn" },
-            }}
+            {...floorPickerAnimation.container}
           >
             <ul>
               <li>

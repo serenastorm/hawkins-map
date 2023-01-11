@@ -6,4 +6,5 @@ export { LocationStatusChip } from "./LocationStatusChip";
 export { MapPin } from "./MapPin";
 export { MapTooltip } from "./MapTooltip";
 export { OpeningTitle } from "./OpeningTitle";
+export { Tooltip } from "./Tooltip";
 export { ZoomControls } from "./ZoomControls";

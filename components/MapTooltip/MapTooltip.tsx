@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-// import { usePopperTooltip } from "react-popper-tooltip";
-import { LocationStatusChip } from "@/components";
+import { LocationStatusChip } from "components";
+import { tooltipAnimation } from "./MapTooltip.animations";
 
-import type { Location } from "@/constants/locations";
+import type { Location } from "constants/locations";
 import type { CSSProperties } from "react";
 
 import styles from "./MapTooltip.module.scss";
@@ -37,27 +37,7 @@ export const MapTooltip = ({
           aria-labelledby={`${id}-tab-control`}
           id={`${id}-tab`}
           className={styles.tooltipContainer}
-          // layout
-          // layoutId={id}
-          // style={{ maxHeight: controlledVisible ? "max-content" : 0 }}
-          // transition={{ duration: 1 }}
-          initial={{
-            opacity: 1,
-            maxHeight: 0,
-          }}
-          animate={{
-            opacity: 1,
-            maxHeight: "50rem",
-            transition: {
-              duration: 0.5,
-              type: "tween",
-              ease: "easeOut",
-            },
-          }}
-          exit={{
-            opacity: 0,
-            transition: { duration: 0.25, type: "tween", ease: "easeIn" },
-          }}
+          {...tooltipAnimation.container}
         >
           <div
             className={styles.tooltip}
@@ -71,30 +51,11 @@ export const MapTooltip = ({
             {img && (
               <motion.div
                 className={styles.image}
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: imageLoaded ? 1 : 0,
-                  transition: {
-                    duration: 0.5,
-                    type: "tween",
-                    ease: "easeOut",
-                    delay: 0.25,
-                  },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: {
-                    duration: 0.25,
-                    type: "tween",
-                    ease: "easeIn",
-                  },
-                }}
+                {...tooltipAnimation.image(imageLoaded)}
               >
                 <Image
                   src={img}
-                  alt="Map of Hawkins"
+                  alt=""
                   width="300"
                   height="168"
                   onLoad={() => setImageLoaded(true)}
@@ -104,66 +65,19 @@ export const MapTooltip = ({
 
             <motion.div
               className={styles.title}
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-                transition: {
-                  duration: 0.5,
-                  type: "tween",
-                  ease: "easeOut",
-                  delay: img ? 0.5 : 0.25,
-                },
-              }}
-              exit={{
-                opacity: 0,
-                transition: { duration: 0.25, type: "tween", ease: "easeIn" },
-              }}
+              {...tooltipAnimation.content(img ? 2 : 1)}
             >
               <h2>{title}</h2> <LocationStatusChip status={status} />
             </motion.div>
             {address && (
-              <motion.address
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                  transition: {
-                    duration: 0.5,
-                    type: "tween",
-                    ease: "easeOut",
-                    delay: img ? 0.7 : 0.5,
-                  },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.25, type: "tween", ease: "easeIn" },
-                }}
-              >
+              <motion.address {...tooltipAnimation.content(img ? 3 : 2)}>
                 {address}
               </motion.address>
             )}
 
             {source && (
               <motion.blockquote
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                  transition: {
-                    duration: 0.5,
-                    type: "tween",
-                    ease: "easeOut",
-                    delay: (address ? 0.7 : 0.5) + (img ? 0.2 : 0),
-                  },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.25, type: "tween", ease: "easeIn" },
-                }}
+                {...tooltipAnimation.content((address ? 3 : 2) + (img ? 1 : 0))}
               >
                 <p>{source.quote}</p>
                 <cite>{source.author}</cite>
@@ -171,22 +85,7 @@ export const MapTooltip = ({
             )}
             {description && (
               <motion.p
-                initial={{
-                  opacity: 0,
-                }}
-                animate={{
-                  opacity: 1,
-                  transition: {
-                    duration: 0.5,
-                    type: "tween",
-                    ease: "easeOut",
-                    delay: (address ? 0.7 : 0.5) + (img ? 0.2 : 0),
-                  },
-                }}
-                exit={{
-                  opacity: 0,
-                  transition: { duration: 0.25, type: "tween", ease: "easeIn" },
-                }}
+                {...tooltipAnimation.content((address ? 3 : 2) + (img ? 1 : 0))}
               >
                 {description}
               </motion.p>

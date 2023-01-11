@@ -23,7 +23,7 @@ export const icons: { [key in LocationCategory]: () => JSX.Element } = {
   library: LibraryIcon,
   police: PoliceIcon,
   "place of interest": PointOfInterestIcon,
-  "public services": PoliceIcon,
+  "public services": PointOfInterestIcon,
   residence: ResidenceIcon,
   retail: RetailIcon,
   school: SchoolIcon,

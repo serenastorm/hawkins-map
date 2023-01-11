@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { Button } from "components/Button";
-import { LOCATION_TYPES } from "@/constants/locations";
-import type { LocationType } from "@/constants/locations";
+import { LOCATION_TYPES, type LocationType } from "constants/locations";
+import { filterAnimation } from "./Filters.animations";
 
 import styles from "./Filters.module.scss";
 
@@ -36,15 +36,7 @@ export const Filters = ({
         {showFilters && (
           <motion.section
             className={styles.filters}
-            initial={{ x: "100%" }}
-            animate={{
-              x: 0,
-              transition: { duration: 0.5, type: "tween", ease: "easeOut" },
-            }}
-            exit={{
-              x: "100%",
-              transition: { duration: 0.2, type: "tween", ease: "easeIn" },
-            }}
+            {...filterAnimation.container}
           >
             <div className={styles.closeBtn}>
               <Button

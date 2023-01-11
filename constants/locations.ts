@@ -284,7 +284,7 @@ export const locations: Location[] = [
     category: "library",
     coordinates: {
       x: 1181,
-      y: 774,
+      y: 784,
     },
     img: "/assets/hawkins-public-library.jpg",
     title: "Hawkins Public Library",
