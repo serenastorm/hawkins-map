@@ -86,7 +86,7 @@ export const LOCATION_TYPES: {
 
 const MAPLE_NOTES =
   'This is labelled Maple Avenue, not Maple Street, but Nancy tells Steve to meet her "at the corner of Maple and Dearborn" (S1E1) and Dearborn crosses Maple Avenue, so it could be a labelling error.';
-const MURRAYS_MAP_NOTES = "Location estimated using Murray Bauman's map (S1E5)";
+const MURRAYS_MAP_NOTES = "Location estimated using Murray Bauman’s map (S1E5)";
 
 export const locations: Location[] = [
   {
@@ -176,7 +176,7 @@ export const locations: Location[] = [
     },
     description: MURRAYS_MAP_NOTES,
     img: "/assets/bennys-burgers.jpg",
-    title: "Benny's Burgers",
+    title: "Benny’s Burgers",
     status: "approx",
     priority: 2,
   },
@@ -235,7 +235,7 @@ export const locations: Location[] = [
       y: 744,
     },
     description:
-      "In S1E6, Jonathan and Nancy go shopping for bear traps at Hunting & Camping. It is shown as being opposite to The Hawk cinema and to the left of RadioShack and Melvald's.",
+      "In S1E6, Jonathan and Nancy go shopping for bear traps at Hunting & Camping. It is shown as being opposite to The Hawk cinema and to the left of RadioShack and Melvald’s.",
     img: "/assets/hunting-and-camping.jpg",
     title: "Hunting & Camping",
     status: "confirmed",
@@ -263,12 +263,13 @@ export const locations: Location[] = [
       y: 744,
     },
     img: "/assets/melvalds.jpg",
-    title: "Melvald's General Store",
+    title: "Melvald’s General Store",
     status: "confirmed",
     priority: 2,
   },
   {
     id: "the-hawk",
+    address: "Oak Street",
     category: "cinema",
     coordinates: {
       x: 1140,
@@ -393,7 +394,7 @@ export const locations: Location[] = [
     title: "Mirkwood",
     status: "confirmed",
     source: {
-      quote: "It's where Cornwallis and Kerley meet.",
+      quote: "It’s where Cornwallis and Kerley meet.",
       author: "Mike to Hopper, S1E1",
     },
     priority: 1,
@@ -454,7 +455,7 @@ export const locations: Location[] = [
       y: 1184,
     },
     description: MURRAYS_MAP_NOTES,
-    title: "Will's bike",
+    title: "Will’s bike",
     status: "approx",
     priority: 1,
   },
@@ -480,7 +481,7 @@ export const locations: Location[] = [
     },
     description: MURRAYS_MAP_NOTES,
     img: "/assets/barbs-car.jpg",
-    title: "Barb's car",
+    title: "Barb’s car",
     status: "approx",
     priority: 1,
   },
@@ -505,7 +506,7 @@ export const locations: Location[] = [
       y: 1464,
     },
     img: "/assets/lovers-lake.jpg",
-    title: "Lover's Lake",
+    title: "Lover’s Lake",
     status: "confirmed",
     priority: 1,
   },
@@ -517,9 +518,9 @@ export const locations: Location[] = [
       x: 841,
       y: 1437,
     },
-    description: "Said to be near Lover's Lake",
+    description: "Said to be near Lover’s Lake",
     img: "/assets/lipton-house.jpg",
-    title: "Lipton House (Reefer Rick's)",
+    title: "Lipton House (Reefer Rick’s)",
     status: "approx",
     priority: 1,
   },

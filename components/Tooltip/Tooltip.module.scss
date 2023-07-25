@@ -1,10 +1,12 @@
 .tooltipWrapper {
   position: relative;
   display: inline;
-
-  &:hover {
-    color: var(--text-color);
-  }
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-underline-offset: 0.2em;
+  text-decoration-color: var(--secondary-text-color);
+  color: var(--text-color);
+  cursor: default;
 }
 
 .tooltipContainer {

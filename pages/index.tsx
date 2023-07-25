@@ -233,7 +233,7 @@ const Home: NextPage = () => {
                           {
                             "--base-map-width": BASE_MAP_SIZE.width,
                             "--base-map-height": BASE_MAP_SIZE.height,
-                            "--pin-scale": PIN_SCALE < 0.5 ? 0.5 : PIN_SCALE,
+                            "--pin-scale": PIN_SCALE < 0.3 ? 0.3 : PIN_SCALE,
                             cursor: isPanning ? "grabbing" : "grab",
                           } as CSSProperties
                         }
