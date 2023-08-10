@@ -279,7 +279,7 @@ export default function Starcourt() {
                                           "--location-y": MIN_Y,
                                           "--location-width": LOCATION_WIDTH,
                                           "--location-height": LOCATION_HEIGHT,
-                                          "clip-path": `polygon(${location.coords
+                                          clipPath: `polygon(${location.coords
                                             .map(
                                               (coord) =>
                                                 `${
