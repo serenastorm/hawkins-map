@@ -31,7 +31,6 @@ $field-padding: 6px;
   z-index: 150;
   background-color: var(--bg-color);
   padding: var(--page-padding);
-  // min-width: 35vw;
   width: var(--filters-width);
   display: flex;
   flex-direction: column;
@@ -73,10 +72,7 @@ $field-padding: 6px;
     opacity: 0;
     margin-right: 12px;
 
-    /* When the checkbox is checked, add a blue background */
     &:checked ~ .checkmark {
-      // background-color: #2196f3;
-
       /* Show the checkmark when checked */
       &:after {
         opacity: 1;

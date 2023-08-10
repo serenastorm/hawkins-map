@@ -160,7 +160,7 @@ const Home: NextPage = () => {
         <main>
           <OpeningTitle />
 
-          <div className={styles.mapWrapper}>
+          <div>
             <TransformWrapper
               key="hawkins-map"
               initialScale={scale}

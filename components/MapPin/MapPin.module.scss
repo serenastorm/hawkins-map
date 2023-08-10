@@ -72,19 +72,6 @@
     outline: none;
   }
 
-  // &[tabindex="0"]:focus-visible {
-  //   &:before {
-  //     background-color: var(--text-color);
-  //     border-color: var(--text-color);
-  //   }
-
-  //   & > svg {
-  //     path[fill] {
-  //       fill: var(--bg-color);
-  //     }
-  //   }
-  // }
-
   &::before {
     content: "";
     position: absolute;

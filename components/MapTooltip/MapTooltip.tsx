@@ -28,7 +28,6 @@ export const MapTooltip = ({
   title,
 }: MapTooltipType) => {
   const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-  // const IS_STARCOURT_TOOLTIP = id === "starcourt-mall";
 
   return (
     <AnimatePresence>

@@ -67,8 +67,6 @@ export const MapPin = ({
       zoomIn();
       setControlledVisible(true);
     },
-    // onMouseEnter: () => setControlledVisible(true),
-    // onMouseLeave: () => setControlledVisible(false),
   } as HTMLProps<HTMLButtonElement>;
 
   return (
