@@ -1,0 +1,54 @@
+$spinner-branches: 12;
+$spinner-size: 40px;
+
+.loadingSpinner,
+.loadingSpinner div,
+.loadingSpinner div:after {
+  box-sizing: border-box;
+}
+
+.loadingSpinner {
+  color: white;
+  display: inline-block;
+  position: absolute;
+  width: $spinner-size;
+  height: $spinner-size;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.5 * $spinner-size;
+  margin-left: -0.5 * $spinner-size;
+
+  div {
+    transform-origin: $spinner-size / 2 $spinner-size / 2;
+    animation: loadingSpinner 1.2s linear infinite;
+
+    &:after {
+      content: " ";
+      display: block;
+      position: absolute;
+      top: 0.04 * $spinner-size;
+      left: 0.46 * $spinner-size;
+      width: 0.075 * $spinner-size;
+      height: 0.22 * $spinner-size;
+      border-radius: 20%;
+      background: currentColor;
+    }
+
+    @for $i from 1 through $spinner-branches {
+      &:nth-child(#{$i}) {
+        transform: rotate((30 * ($i - 1)) + deg);
+        animation-delay: -1.1s + (0.1s * ($i - 1));
+      }
+    }
+  }
+}
+
+@keyframes loadingSpinner {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}

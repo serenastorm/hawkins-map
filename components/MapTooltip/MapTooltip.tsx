@@ -1,7 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { LocationStatusChip } from "components";
+import { LocationStatusChip } from "components/LocationStatusChip";
+import { LoadingSpinner } from "components/LoadingSpinner";
 import { tooltipAnimation } from "./MapTooltip.animations";
 
 import type { Location } from "constants/locations";
@@ -48,18 +49,21 @@ export const MapTooltip = ({
             }
           >
             {img && (
-              <motion.div
-                className={styles.image}
-                {...tooltipAnimation.image(imageLoaded)}
-              >
-                <Image
-                  src={img}
-                  alt=""
-                  width="300"
-                  height="168"
-                  onLoad={() => setImageLoaded(true)}
-                />
-              </motion.div>
+              <div className={styles.imageWrapper}>
+                {!imageLoaded && <LoadingSpinner />}
+                <motion.div
+                  className={styles.image}
+                  {...tooltipAnimation.image(imageLoaded)}
+                >
+                  <Image
+                    src={img}
+                    alt=""
+                    width="300"
+                    height="168"
+                    onLoad={() => setImageLoaded(true)}
+                  />
+                </motion.div>
+              </div>
             )}
 
             <motion.div

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import { tooltipAnimation } from "components/MapTooltip/MapTooltip.animations";
+import { LoadingSpinner } from "components/LoadingSpinner";
 
 import styles from "./Tooltip.module.scss";
 
@@ -27,6 +28,7 @@ export const Tooltip = ({ children, imgSrc }: TooltipProps) => {
             className={styles.tooltipContainer}
             {...tooltipAnimation.container}
           >
+            {!imageLoaded && <LoadingSpinner />}
             <motion.div
               className={styles.image}
               {...tooltipAnimation.image(imageLoaded)}
