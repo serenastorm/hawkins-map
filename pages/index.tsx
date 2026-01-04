@@ -86,7 +86,7 @@ const Home: NextPage = () => {
 
     if (newTabIndex || newTabIndex === 0) {
       /* Focus new tab button */
-      tabsRefs?.current[newTabIndex]?.focus();
+      tabsRefs?.current[newTabIndex]?.focus({ preventScroll: true });
     }
   };
 

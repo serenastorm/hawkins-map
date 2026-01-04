@@ -1,8 +1,5 @@
-import { createElement } from "react";
-import Link from "next/link";
 import { usePopperTooltip } from "react-popper-tooltip";
 import { icons, QuestionIcon, StarcourtLogomark } from "@/icons";
-import { LocationStatusChip } from "@/components";
 
 import type { Location } from "@/constants/locations";
 import type { HTMLProps, CSSProperties } from "react";
@@ -81,7 +78,7 @@ export const MapPin = ({
             "--priority": priority,
           } as CSSProperties
         }
-      ></div>
+      />
       {IS_STARCOURT_PIN ? (
         <a {...starcourtPinProps} title=" Explore the Starcourt Mall">
           <StarcourtLogomark />
